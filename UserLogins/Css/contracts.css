@@ -1,0 +1,20 @@
+.message-empty {
+  /* background-color: orange; */
+  text-align: center;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.attachments {
+  margin-bottom: 20px;
+  width: 100%;
+}
+.attachments a {
+  font-size: 12px;
+}
+
+.save-attachments,
+.upload-attachments {
+  width: 100%;
+}

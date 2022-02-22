@@ -1,0 +1,63 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container-dashboard-information {
+  position: absolute;
+  top: 8%;
+  right: 50%;
+  transform: translate(50%, 8%);
+  min-width: 90%;
+  background-color: white;
+  border-radius: 20px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 38px;
+  font-family: Tahoma;
+}
+
+.dashboard-navigation {
+  display: flex;
+  margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: 600;
+  font-family: sans-serif;
+}
+
+.agent-id {
+  width: 8%;
+  text-align: center;
+}
+
+.agent-name {
+  width: 30%;
+  text-align: center;
+}
+
+.nav-tag {
+  text-align: center;
+  width: 15%;
+}
+
+.dashboard-navigation div {
+  border: 1px solid black;
+  display: inline-block;
+}
+
+.dashboard-navigation label {
+  line-height: 100%;
+}
+
+.dashboard-information {
+  display: flex;
+}

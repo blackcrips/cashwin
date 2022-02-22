@@ -1,0 +1,511 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: static;
+  height: 100vh;
+  background-color: #eee;
+  overflow-y: auto;
+}
+
+.header {
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  background: #96baff;
+  top: 0;
+  z-index: 2;
+  justify-content: space-between;
+}
+
+.container-navigation {
+  margin-left: 40px;
+  padding-top: 5px;
+}
+
+.navigation ul li {
+  list-style: none;
+  display: inline-block;
+  line-height: 40px;
+}
+
+.navigation ul li a,
+.add-new a {
+  padding: 0 10px;
+  font-family: sans-serif;
+  font-size: 18px;
+  text-decoration: none;
+  display: block;
+  transition: all 0.5s;
+}
+
+.orr-sub {
+  position: Relative;
+  width: 100px;
+  text-align: center;
+}
+
+.orr-sub ul li {
+  width: 100%;
+  font-size: 18px;
+}
+
+.container-orr-sublist {
+  position: absolute;
+  display: none;
+  transition: all 0.35s ease-in-out;
+  padding-top: 10px;
+  background-color: #96baff;
+  padding: 0 10px;
+}
+
+.orr-sub:hover .container-orr-sublist {
+  display: block;
+}
+
+.navigation a:hover,
+.navigation a:focus {
+  color: white;
+
+  outline: none;
+}
+
+.add-new a:hover,
+.add-new a:focus {
+  background-color: #9fafcc;
+  border: none;
+  outline: none;
+}
+
+.container-profle {
+  display: flex;
+  margin-top: 5px;
+}
+
+.profile-picture {
+  width: 40px;
+  height: 40px;
+  background-image: url("../img/blank-profile.png");
+  background-size: cover;
+  border-radius: 50%;
+}
+
+.navigation-profile {
+  margin: 0 10px;
+  height: 35px;
+  overflow: hidden;
+  line-height: 40px;
+  transition: all 0.4s ease-in-out;
+}
+
+.navigation-profile li {
+  list-style: none;
+  text-align: right;
+}
+
+.navigation-profile a {
+  font-size: 22px;
+  text-decoration: none;
+  display: block;
+  font-family: sans-serif;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.navigation-profile a:hover {
+  /* background-color: #7C83FD; */
+  border-radius: 5px 20px 20px 5px;
+  padding-right: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.navigation-profile:hover {
+  height: 130px;
+  cursor: pointer;
+}
+
+.container-1st {
+  position: relative;
+  width: 1200px;
+  background-color: #fff;
+  border-radius: 0 0 20px 20px;
+  padding: 10px;
+  margin-bottom: 100px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search {
+  position: relative;
+  align-items: baseline;
+  width: 30%;
+  padding: 10px;
+}
+
+.search input {
+  position: absolute;
+  bottom: 10%;
+  right: 0;
+}
+
+.data-navigation {
+  display: flex;
+  flex-direction: row;
+}
+
+.data-navigation div {
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+  user-select: none;
+  padding: 3px 20px;
+  margin-right: 5px;
+  color: 000;
+}
+
+.data-navigation div:hover {
+  background-color: #9fafcc;
+  cursor: pointer;
+  border-radius: 10px 10px 0 0;
+}
+
+.container-body {
+  position: absolute;
+  top: 10%;
+  left: 23%;
+  transform: translate(-10%, 0);
+  display: block;
+}
+
+.active[data-tab-target] {
+  background-color: #7c83fd;
+  border-radius: 10px 10px 0 0;
+  display: block;
+  color: #fff;
+}
+
+[data-tab-content] {
+  display: none;
+}
+
+.active[data-tab-content] {
+  width: 100%;
+  display: inline-table;
+}
+
+.container-1st thead {
+  font-family: serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 20px;
+  border-bottom: 2px solid #eee;
+}
+
+.container-1st tbody {
+  font-family: sans-serif;
+  font-size: 14px;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.container-1st tr:nth-child(even) {
+  background-color: rgb(245, 242, 234);
+}
+
+.container-1st .td-buttons input {
+  margin: 5px 5px;
+}
+
+/* setting up overlay/modal for logout button when clicked */
+.container-overlay.active {
+  pointer-events: all;
+  opacity: 1;
+  display: flex;
+  z-index: 5;
+}
+
+.container-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  transition: 200ms ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+}
+
+.modal-logout {
+  background-color: #fff;
+  width: 50%;
+  height: 24%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.modal-logout-header {
+  background-color: #96baff;
+  padding: 10px;
+  font-family: serif;
+  font-weight: bolder;
+  font-size: 30px;
+}
+
+.modal-logout-header p {
+  margin: 0;
+}
+
+.modal-logout-message {
+  padding: 5px 20px;
+  font-family: sans-serif;
+  min-height: 50%;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-buttons button {
+  margin-right: 10px;
+}
+
+.active-body {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* // modal for view button */
+.view-details {
+  position: absolute;
+  width: 50%;
+  background-color: #f3f3f3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  border-radius: 20px;
+  padding: 10px;
+  z-index: 5;
+  flex-direction: column;
+}
+
+.view-details.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.container-view-appNumber span {
+  color: Red;
+  font-weight: bold;
+}
+
+.cancel-button {
+  width: 100%;
+  height: 20px;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cancel-button-inside {
+  position: relative;
+  height: 100%;
+  width: 25px;
+}
+
+.cancel-button-inside:after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: "\1F7AC"; /* use the hex value here... */
+  color: #000;
+  text-align: center;
+}
+
+.cancel-button-inside:hover {
+  cursor: pointer;
+}
+
+.container-information {
+  position: relative;
+  height: 95%;
+  display: flex;
+  border: 1px solid black;
+  flex-direction: column;
+}
+
+.container-information-child {
+  position: relative;
+  height: 95%;
+  display: flex;
+  padding: 0px 15px;
+}
+
+.container-information-left,
+.container-information-right {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container-information-left {
+  padding-top: 20px;
+}
+
+.container-information-left div {
+  padding: 5px;
+  width: 100%;
+  margin: 5px 0px;
+}
+
+.container-information-left label {
+  font-weight: bold;
+}
+
+.container-information-left span {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container-attachment {
+  display: flex;
+  justify-content: space-around;
+}
+
+.container-attachment button {
+  width: 50px;
+  background-color: rgb(36, 75, 118);
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.container-information button:hover {
+  cursor: pointer;
+}
+
+.fieldAttachment {
+  width: 100%;
+  align-items: center;
+  padding: 5px;
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid black;
+  flex-direction: column;
+}
+
+.file-upload {
+  display: flex;
+  margin-top: 20px;
+  max-width: 100%;
+}
+
+.file-upload-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.file-upload input {
+  font-size: 12px;
+}
+
+.file-upload label {
+  color: red;
+  font-size: 0.7rem;
+  width: 70%;
+  font-style: italic;
+}
+
+.fTextArea {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+legend {
+  font-weight: bold;
+  width: auto;
+  padding: 0 5px;
+}
+
+.container-textArea {
+  display: flex;
+  max-height: 80%;
+  max-width: 100%;
+  margin: 20px 0;
+}
+
+.fTextArea {
+  padding: 10px;
+  height: 250px;
+  width: 100%;
+}
+
+.textArea {
+  height: 100%;
+  width: 100%;
+  text-align: start;
+  outline: none;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.container-view-button {
+  width: 100%;
+  height: 30px;
+  justify-content: flex-end;
+  align-items: center;
+  display: flex;
+  margin-top: 10px;
+}
+
+.container-view-button button {
+  margin-right: 5px;
+}
+
+.save {
+  margin-right: 10px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: 200ms ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+
+  overflow: hidden;
+}
+
+.overlay.active {
+  pointer-events: all;
+  opacity: 1;
+}
+
+.view-details-right-bottom {
+  margin-right: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}

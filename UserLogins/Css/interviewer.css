@@ -1,0 +1,864 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+* select,
+button {
+  cursor: pointer;
+}
+
+* input:hover,
+select:hover,
+button:hover {
+  box-shadow: 0px 0px 8px burlywood;
+  border: none;
+  cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+body {
+  background: rgb(223, 188, 136);
+
+  /* background:linear-gradient(45deg, rgb(160, 41, 4), blue); */
+}
+
+body * input {
+  text-align: center;
+}
+
+.container-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  background: rgb(180, 180, 179);
+  top: 0;
+}
+
+.container-header-content {
+  margin-bottom: 10px;
+}
+
+.header-first {
+  display: flex;
+  justify-content: center;
+  height: 40px;
+  font-size: 2rem;
+  font-weight: 600;
+  font-family: serif;
+}
+
+.header-second {
+  display: flex;
+  justify-content: center;
+  height: 30px;
+  line-height: 1;
+  font-family: serif;
+}
+
+.navigation-box {
+  background-color: rgb(18, 67, 112);
+  border-bottom: 1px solid #eee;
+  border-radius: 20px 20px 0 0;
+  flex-wrap: wrap;
+}
+
+#navigation-content {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  justify-content: center;
+}
+
+#navigation-content div {
+  font-size: 20px;
+  text-align: center;
+  padding: 12px;
+  color: rgb(255, 241, 240);
+}
+
+.tab.active {
+  background-color: #ccc;
+  border-radius: 20px 20px 0 0;
+}
+
+#navigation-content div:hover {
+  cursor: pointer;
+  background-color: #aaa;
+  border-radius: 20px 20px 0 0;
+}
+
+#tab-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+[data-tab-content] {
+  display: none;
+}
+
+.active[data-tab-content] {
+  display: flex;
+}
+
+.attachment {
+  position: fixed;
+  width: 22%;
+  height: 30px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.attachment a {
+  text-decoration: none;
+  color: black;
+  font-weight: 800;
+  float: right;
+  margin-right: 20px;
+  width: 15%;
+  font-size: 15px;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.attachment a:hover {
+  border-bottom: 3px solid rgb(243, 247, 243);
+}
+
+.container-information {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  margin-top: 120px;
+}
+
+#personal-information,
+#job-description,
+#character-references,
+#loan-and-bank-details {
+  max-width: 925px;
+  flex-wrap: wrap;
+  padding: 20px;
+  color: rgb(255, 241, 240);
+  background-color: rgb(18, 67, 112);
+  border-radius: 0px 0px 20px 20px;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+#loan-history {
+  /* max-width: 100%; */
+  min-width: 925px;
+  flex-wrap: wrap;
+  padding: 20px;
+  color: rgb(255, 241, 240);
+  background-color: rgb(18, 67, 112);
+  border-radius: 0px 0px 20px 20px;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+.label-header {
+  display: flex;
+  font-weight: bolder;
+  font-size: 30px;
+  width: 100%;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.clients-name,
+.birthday-tag,
+.civil-status-tag,
+.personal-number-tag,
+.primray-number,
+.present-address-tag,
+.permanent-address-tag,
+.others-tag,
+.employment-status-tag,
+.date-hire-tag,
+.salary-tag,
+.payroll-tag,
+.company-number-tag,
+.company-information-tag,
+.loan-details-tag,
+.bank-account-tag,
+.alternate-bank-account-tag,
+.references-tag {
+  position: relative;
+  display: flex;
+  font-size: larger;
+  height: 40%;
+  padding-left: 5px;
+  padding-bottom: 5px;
+  font-size: large;
+  width: 100%;
+}
+
+.full-name-box {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.full-name-box div {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+/* 2ndline */
+
+.container-flexbox-name {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.container-flexbox {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 30px 0;
+}
+
+.information-details-split {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.birthday-box {
+  width: 30%;
+}
+
+.details-first-column {
+  display: flex;
+  flex-direction: column;
+}
+
+#date-hire-text {
+  display: flex;
+  width: 25%;
+  height: 100%;
+  border-radius: 20px 20px 20px 20px;
+  justify-content: center;
+  padding: 2px;
+  border: 1px solid green;
+  font-weight: bold;
+}
+
+#date-hire-text:hover {
+  cursor: pointer;
+  background-color: rgb(148, 133, 50);
+}
+
+.container-date {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 10%;
+  padding-right: 10px;
+}
+
+.container-month,
+.container-year {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  padding-right: 10px;
+}
+
+#birt-day-date {
+  width: 15px;
+}
+
+#your-age {
+  display: flex;
+  width: 25%;
+  height: 100%;
+  border-radius: 20px 20px 20px 20px;
+  justify-content: center;
+  padding: 2px;
+  border: 1px solid green;
+}
+
+#your-age:hover {
+  cursor: pointer;
+  background-color: rgb(148, 133, 50);
+}
+
+/* Third Line */
+
+.civil-status-option,
+.employment-status-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.civil-status-option label,
+.employment-status-container label,
+.personal-number-box label,
+.alternate-number-box label,
+#disbursement-date {
+  cursor: pointer;
+}
+
+/* Fourth Line */
+
+.personal-number-box,
+.alternate-number-box {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 100%;
+}
+
+.contact-number {
+  display: flex;
+  flex-direction: column;
+}
+
+#postpaid-plan,
+#postpaid-plan-alternate {
+  width: 90%;
+}
+
+.postpaid-plan-box {
+  width: 20%;
+}
+
+.primary-number-remarks,
+.alternate-number-remarks {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+}
+
+/* 6th Line */
+
+.present-address-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.present-address-box div {
+  display: flex;
+  flex-direction: column;
+  margin-right: 40px;
+  padding-bottom: 5px;
+}
+
+.house-number-box {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+}
+
+.zip-code-box {
+  width: 10%;
+}
+
+.city-box,
+.municipality-box {
+  width: 15%;
+}
+
+.address-remarks-box {
+  width: 30%;
+}
+
+.map-link-box {
+  width: 60%;
+}
+
+/* 7th Line */
+
+.permanent-address-box {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.sss-number-box {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  margin-top: 40px;
+}
+
+/* 8th Line */
+
+.others-husband-box,
+.others-mother-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.others-husband-box div,
+.others-mother-box div {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  padding-bottom: 10px;
+}
+
+.flex-box-9,
+.flex-box-10,
+.flex-box-11,
+.flex-box-12,
+.flex-box-13,
+.flex-box-14 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 10%;
+  margin-bottom: 20px;
+}
+
+.job-information-tag {
+  text-align: center;
+}
+
+.company-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.company-container div {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  margin-right: 80px;
+  margin-bottom: 10px;
+}
+
+#company-address,
+#branch-site-address {
+  width: 130%;
+}
+
+.position-box,
+.nature-of-work-box {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.nature-of-work-box input {
+  width: 40%;
+}
+
+.position-box input {
+  width: 30%;
+}
+
+.employer-number-box {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.employer-number-box div {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 5px;
+}
+
+.container-salary {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.container-salary div {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+}
+
+.container-payroll {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.container-payroll div {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  margin-right: 20px;
+}
+
+.container-payroll-type {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  margin-right: 40px;
+}
+
+.container-payroll-1,
+.container-payroll-2 {
+  display: flex;
+  flex-direction: column;
+  width: 7%;
+  margin-right: 15px;
+}
+
+.resignation-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.loan-history-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.loan-history-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loan-history-box-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+  /* justify-content: space-between; */
+  flex-direction: row;
+}
+
+.sample-div {
+  /* background-color: orange; */
+  display: flex;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.sample-div input {
+  margin-left: 10px;
+  width: 100%;
+}
+
+/* loan and bank details css */
+
+.loan-and-bank-details-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.container-left,
+.container-right {
+  display: flex;
+  outline: 1px solid rgb(204, 196, 196);
+  width: 48%;
+  height: 100%;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.loan-details-box {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin-bottom: 20px;
+}
+
+.loan-details-box label {
+  padding-bottom: 20px;
+}
+
+.container-bank-account {
+  display: flex;
+  margin-bottom: 20px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+#purpose-of-loan {
+  width: 150%;
+}
+
+.bank-account-box,
+.alternate-bank-account-box {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.bank-account-box select,
+.alternate-bank-account-box select {
+  width: 50%;
+  margin-right: 15px;
+}
+
+.bank-account-box input,
+.alternate-bank-account-box input {
+  width: 40%;
+  margin-right: 20px;
+}
+
+.bank-account-box label,
+.alternate-bank-account-box label {
+  margin-bottom: 10px;
+}
+
+#expenses {
+  width: 40%;
+}
+
+.loanable-amount {
+  position: absolute;
+  display: flex;
+  width: 20%;
+  height: 40px;
+  /* background-color: rgb(182, 12, 12); */
+}
+
+.container-approve-disbursement {
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.container-approve-disbursement div {
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+.due-date-hide {
+  display: none;
+}
+
+.active.due-date-hide {
+  display: flex;
+}
+
+.due-date {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.due-date-left,
+.due-date-right {
+  display: flex;
+  flex-direction: column;
+  max-width: 44%;
+  flex-wrap: wrap;
+  height: 100%;
+  margin: 5px 10px;
+}
+
+.due-date-left label,
+.due-date-right label {
+  margin-bottom: 5px;
+}
+
+#container-interest-tax {
+  display: flex;
+  flex-direction: row;
+}
+
+.container-interest-tax,
+.container-disburse-payment {
+  display: flex;
+  width: 50%;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.container-interest-tax div,
+.container-disburse-payment div {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  margin-right: 20px;
+}
+
+.flex-box-15,
+.flex-box-16,
+.flex-box-17 {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.container-box-1 {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.container-box-1 div {
+  display: flex;
+  width: 30%;
+  height: 100%;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.save-and-back {
+  position: relative;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
+
+#message {
+  color: red;
+  font-weight: 600;
+  font-family: sans-serif;
+}
+
+#next {
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 940px) {
+  #loan-history {
+    min-width: 100vw;
+  }
+  .sample-div {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .loan-history-box-content {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  #navigation-content div {
+    font-size: 19.7px;
+    line-height: 1;
+  }
+
+  .loan-and-bank-details-box {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+  }
+
+  .container-left,
+  .container-right {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  #loan-history {
+    min-width: 100vw;
+  }
+
+  .loan-history-box-content {
+    flex-direction: row;
+  }
+
+  #navigation-content div {
+    font-size: 12px;
+  }
+
+  .loan-and-bank-details-box {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+  }
+
+  .container-left,
+  .container-right {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .container-box-1 {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .container-box-1 div {
+    width: 80%;
+  }
+
+  .flex-box-15,
+  .flex-box-16,
+  .flex-box-17 {
+    margin-bottom: 30px;
+  }
+}

@@ -1,0 +1,135 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+}
+
+.message {
+    height: 50px;
+    width: 100%;
+    align-items: center;
+    font-size: 22px;
+    color: black;
+    padding: 5px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.container-table {
+    border: 1px solid rgb(184, 187, 184);
+    max-width: 1200px;
+    padding: 20px;
+    border-radius: 30px;
+    background-color: #f0efef;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 20px;
+}
+
+thead {
+    border-bottom: 1px solid black;
+}
+
+td {
+    text-align: center;
+}
+
+.tr-data:nth-child(even) {
+    background-color: cornsilk;
+}
+
+
+td, th, tr {
+    padding: 10px 10px;
+}
+
+.container-overlay {
+    display: none;
+}
+
+.container-agents-data td input {
+    padding: 0 5px;
+}
+.active.container-overlay {
+    display: block;
+    position: fixed;
+    background-color: rgba(0,0,0, .5);
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-agents-data {
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgb(83, 83, 83);
+}
+
+.container-agents-data h1 {
+    font-family: serif;
+    font-weight: bold;
+}
+
+.container-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.container-button button {
+    margin-left: 20px;
+    font-family: sans-serif;
+}
+
+
+th{
+    text-align: center;
+}
+
+.th-action {
+    width: 160px;
+}
+
+.container-buttons {
+    column-count: 2;
+    column-gap: 1px;
+}
+
+
+.sample-container-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   width: 30%;
+    border: 1px solid black;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.sample-container-data input {
+    margin-top: 10px;
+    width: 80%;
+}
+
+.sample-container-data button {
+    display: block;
+    margin-top: 20px;
+}

@@ -1,0 +1,24 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(35, 44, 61);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 22px;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  border-bottom: 1px solid white;
+  padding-top: 10px;
+}
