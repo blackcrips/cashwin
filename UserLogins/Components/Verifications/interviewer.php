@@ -3,7 +3,6 @@ require_once('../../inc/autoLoadClasses.inc.php');
 session_start();
 $addNew = new ClientsController();
 $clientsView = new ClientsView();
-$addNew->add_new();
 $bankNames = new BankAccountsView();
 $bankNames->bankname_dropdown();
 $clientsView->editClient();

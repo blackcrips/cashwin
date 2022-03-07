@@ -1,8 +1,7 @@
 <?php
 require_once('../../inc/autoLoadClasses.inc.php');
-$addNew = new ClientsController();
+$clientsController = new ClientsController();
 $clientsView = new ClientsView();
-$addNew->add_new();
 $bankNames = new BankAccountsView();
 $bankNames->bankname_dropdown();
 
@@ -49,7 +48,7 @@ $bankNames->bankname_dropdown();
 
         <div class="container-information">
 
-            <form action="../../inc/interviewer.inc.php" id="form" method="POST">
+            <form action="../../inc/addNew.inc.php" id="form" method="POST">
                 <div id="tab-content">
                     <div id="personal-information" data-tab-content class="active">
                         <div class="label-header">
@@ -222,62 +221,6 @@ $bankNames->bankname_dropdown();
                         </div>
 
                         <div class="container-flexbox">
-                            <div class="present-address-tag">
-                                <label>Present Address <span style="color:red">*</span></label>
-                            </div>
-
-                            <div class="present-address-box">
-                                <div class="house-number-box">
-                                    <input type="text" id="house-number" data-validation name="house-number" />
-                                    <label for="house-number">House number and subdivision</label>
-                                </div>
-
-                                <div class="street-box">
-                                    <input type="text" id="street" data-validation name="street" />
-                                    <label for="street">Street</label>
-                                </div>
-
-                                <div class="barangay-box">
-                                    <input type="text" id="barangay" data-validation name="barangay" />
-                                    <label for="barangay">Barangay</label>
-                                </div>
-
-                                <div class="city-box">
-                                    <input type="text" id="city" name="city" data-validation />
-                                    <label for="city">City</label>
-                                </div>
-
-                                <div class="municipality-box">
-                                    <input type="text" id="municipality" data-validation name="municipality" />
-                                    <label for="municipality">Municipality</label>
-                                </div>
-
-                                <div class="zip-code-box">
-                                    <input type="text" id="zip-code" data-validation name="zip-code" />
-                                    <label for="zip-code">Zip Code</label>
-                                </div>
-
-                                <div class="address-remarks-box">
-                                    <input type="text" id="address-remarks" name="address-remarks" />
-                                    <label for="address-remarks">Remarks</label>
-                                </div>
-
-                                <div class="map-link-box">
-                                    <input type="text" id="map-link" data-validation name="map-link" />
-                                    <label for="map-link">Map link</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="container-flexbox">
-                            <div class="permanent-address-tag">
-                                <label>Permanent address <span style="color:red">*</span></label>
-                            </div>
-
-                            <div class="permanent-address-box">
-                                <input type="text" id="permanent-address" data-validation name="permanent-address" />
-                                <label for="permanent-address">Address</label>
-                            </div>
 
                             <div class="sss-number-box">
                                 <input type="text" id="sss-number" data-validation name="sss-number" />
@@ -324,6 +267,64 @@ $bankNames->bankname_dropdown();
                                 </div>
                             </div>
                         </div>
+
+                        <div class="container-flexbox">
+                            <div class="present-address-tag">
+                                <label>Present Address <span style="color:red">*</span></label>
+                            </div>
+
+                            <div class="present-address-box">
+                                <div class="house-number-box">
+                                    <input type="text" id="house-number" data-validation name="house-number" />
+                                    <label for="house-number">House number and subdivision</label>
+                                </div>
+
+                                <div class="street-box">
+                                    <input type="text" id="street" data-validation name="street" />
+                                    <label for="street">Street</label>
+                                </div>
+
+                                <div class="barangay-box">
+                                    <input type="text" id="barangay" data-validation name="barangay" />
+                                    <label for="barangay">Barangay</label>
+                                </div>
+
+                                <div class="city-box">
+                                    <input type="text" id="city" name="city" data-validation />
+                                    <label for="city">City</label>
+                                </div>
+
+                                <div class="municipality-box">
+                                    <input type="text" id="municipality" data-validation name="municipality" />
+                                    <label for="municipality">Municipality</label>
+                                </div>
+
+                                <div class="zip-code-box">
+                                    <input type="text" id="zip-code" data-validation name="zip-code" />
+                                    <label for="zip-code">Zip Code</label>
+                                </div>
+
+                                <div class="address-remarks-box">
+                                    <input type="text" id="address-remarks" name="address-remarks" />
+                                    <label for="address-remarks">Remarks</label>
+                                </div>
+
+                                <div class="map-link-box">
+                                    <input type="text" id="map-link" data-validation name="map-link" />
+                                    <label for="map-link">Map link</label>
+                                </div>
+                            </div>
+
+                            <div class="permanent-address-tag">
+                                <label>Permanent address <span style="color:red">*</span></label>
+                            </div>
+
+                            <div class="permanent-address-box">
+                                <input type="text" id="permanent-address" data-validation name="permanent-address" />
+                                <label for="permanent-address">Address</label>
+                            </div>
+                        </div>
+
                     </div>
                     <!--container personal information end div-->
 
@@ -657,7 +658,7 @@ $bankNames->bankname_dropdown();
                             <div class="container-right">
                                 <div class="container-expneses">
                                     <div class="container-original-net">
-                                        <input class="netpay" name="netpay" id="original-net" disabled />
+                                        <input class="netpay" name="netpay" id="original-net" />
                                         <label>Net pay</label>
                                     </div>
 
@@ -671,7 +672,7 @@ $bankNames->bankname_dropdown();
                                         <label><em><u>Additional expenses</u></em></label>
                                     </div>
                                     <div class="total-netpay">
-                                        <input class="netpay" type="number" name="total-net" disabled id="total-net" />
+                                        <input class="netpay" type="text" name="total-net" disabled id="total-net" />
                                         <label>Total Net pay</label>
                                     </div>
 

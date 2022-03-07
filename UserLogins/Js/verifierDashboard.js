@@ -109,3 +109,7 @@ burger.addEventListener("click", () => {
     containerNavigation.classList.add("active");
   }
 });
+
+$(document).ready(function () {
+  $("table").DataTable();
+});

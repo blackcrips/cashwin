@@ -3,6 +3,147 @@
 
 class DbhModelClients extends dbh
 {
+    private function getStaticApplicationNo()
+    {
+        $sql = "SELECT * FROM clients_personal_information WHERE id = 1";
+        $stmt = $this->connect()->prepare($sql);
+
+        if ($stmt->execute()) {
+            $result = $stmt->fetchAll();
+            return $result;
+        } else {
+            die();
+        }
+    }
+
+    private function updateStaticApplicationNo($application_no)
+    {
+        $sql = "UPDATE clients_personal_information SET application_no = :application_no WHERE id = 1";
+        $stmt = $this->connect()->prepare($sql);
+
+        if ($stmt->execute([':application_no' => $application_no])) {
+            return;
+        } else {
+            die();
+        }
+    }
+
+    //create new Clients Personal Information
+    protected function createNewCPI($firstname, $middlename, $lastname, $birthday, $gender, $dependent, $email, $alternateEmail, $facebookLink, $placeOfBirth, $civilStatus, $primaryNumber, $postpaidPrepaid, $postpaidPlan, $primaryNumberRemarks, $alternateNumber, $postpaidPrepaidAlternate, $postpaidPlanAlternate, $alternateNumberRemarks, $sssNumber, $husbandName, $husbandWork, $husbandRemarks, $motherName, $motherWork, $motherAddress, $forFoward)
+    {
+        $sql = "INSERT INTO clients_personal_information (`firstname`, `middlename`, `lastname`, `birthday`, `gender`, `dependent`, `email`, `alternate_email`, `facebook`, `place_of_birth`, `civil_status`, `primary_no`, `primary_no_line`, `primary_no_plan_amount`, `primary_no_remarks`, `secondary_no`, `secondary_no_line`, `secondary_no_plan_amount`, `secondary_no_remarks`, `sss_no`, `spouse_name`, `spouse_occupation`, `spouse_remarks`, `mothers_name`, `mothers_occupation`, `mothers_address`, `for_forward`,`application_no`,`status`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        if (!$this->connect()->prepare($sql)) {
+            echo "Failed to create application";
+            exit();
+        } else {
+            $stmt = $this->connect()->prepare($sql);
+            $status = "Fresh";
+            $staticClient = $this->getStaticApplicationNo();
+            $originalAppNo = $staticClient[0]['application_no'];
+            $application_no = substr($originalAppNo, 2, strlen($originalAppNo)) + 1;
+            $newStaticApplicationNo = "CM" . $application_no;
+            $this->updateStaticApplicationNo($newStaticApplicationNo);
+
+            $stmt->execute([$firstname, $middlename, $lastname, $birthday, $gender, $dependent, $email, $alternateEmail, $facebookLink, $placeOfBirth, $civilStatus, $primaryNumber, $postpaidPrepaid, $postpaidPlan, $primaryNumberRemarks, $alternateNumber, $postpaidPrepaidAlternate, $postpaidPlanAlternate, $alternateNumberRemarks, $sssNumber, $husbandName, $husbandWork, $husbandRemarks, $motherName, $motherWork, $motherAddress, $forFoward, $application_no, $status]);
+        }
+    }
+
+    //create new clients Loan History
+    protected function createNewCLH($loanHistory1, $loanAmount1, $loanHistory2, $loanAmount2, $loanHistory3, $loanAmount3, $email)
+    {
+        $sql = "INSERT INTO clients_loan_history (`history_name1`, `history_amount1`, `history_name2`, `history_amount2`, `history_name3`, `history_amount3`,`application_no`) VALUES (?,?,?,?,?,?,?)";
+
+        if (!$this->connect()->prepare($sql)) {
+            echo "Failed to create application";
+            exit();
+        } else {
+            $stmt = $this->connect()->prepare($sql);
+            $singleClient = $this->singleClientFromNewApp($email);
+            $applicationNo = $singleClient['application_no'];
+            $stmt->execute([$loanHistory1, $loanAmount1, $loanHistory2, $loanAmount2, $loanHistory3, $loanAmount3, $applicationNo]);
+        }
+    }
+
+    //create new Clients Loan and Bank Details
+    protected function createNewCLBD($requestedAmount, $requestedTerm, $purposeOfLoan, $primaryBank, $accountNumber, $alternateBankName, $alternateAccountNumber, $netpay, $additionalExpenses, $approveAmount, $disbursementDate, $approveTerm, $email)
+    {
+        $sql = "INSERT INTO clients_loan_and_bank_details (`requested_amount`, `requested_term`, `purpose_of_loan`, `primary_bank`,`primary_bank_no`, `alternate_bank`,`alternate_bank_no`,`netpay`,`additional_expenses`,`approve_amount`,`disbursement_date`,`approve_term`,`application_no`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        if (!$this->connect()->prepare($sql)) {
+            echo "Failed to create application";
+            exit();
+        } else {
+            $stmt = $this->connect()->prepare($sql);
+            $singleClient = $this->singleClientFromNewApp($email);
+            $applicationNo = $singleClient['application_no'];
+            $stmt->execute([$requestedAmount, $requestedTerm, $purposeOfLoan, $primaryBank, $accountNumber, $alternateBankName, $alternateAccountNumber, $netpay, $additionalExpenses, $approveAmount, $disbursementDate, $approveTerm, $applicationNo]);
+        }
+    }
+
+    //create new Clients Job Description
+    protected function createNewCJD($companyName, $companyAddress, $agencyName, $branchSiteAddress, $lineOfBusiness, $companyNo1, $companyNo2, $dateHire, $position, $natureOfWork, $companyStatus, $basicSalary, $net1, $net2, $net3, $net4, $payrollType, $payrollDate1, $payrollDate2, $payrollDate3, $payrollDate4, $planToTransfer, $email)
+    {
+        $sql = "INSERT INTO clients_job_description (`company_name`,`company_address`,`agency_name`,`branch_site_address`,`line_of_business`,`company_no1`,`company_no2`,`date_hired`,`position`,`nature_of_work`,`status_in_company`,`basic_salary`,`salary1`,`salary2`,`salary3`,`salary4`,`payroll_type`,`paydate1`,`paydate2`,`paydate3`,`paydate4`,`job_description_remarks`,`application_no`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        if (!$this->connect()->prepare($sql)) {
+            echo "Failed to create application";
+            exit();
+        } else {
+            $stmt = $this->connect()->prepare($sql);
+            $singleClient = $this->singleClientFromNewApp($email);
+            $applicationNo = $singleClient['application_no'];
+            $stmt->execute([$companyName, $companyAddress, $agencyName, $branchSiteAddress, $lineOfBusiness, $companyNo1, $companyNo2, $dateHire, $position, $natureOfWork, $companyStatus, $basicSalary, $net1, $net2, $net3, $net4, $payrollType, $payrollDate1, $payrollDate2, $payrollDate3, $payrollDate4, $planToTransfer, $applicationNo]);
+        }
+    }
+
+    //create new Clients Character References
+    protected function createNewCCR($reference1, $referenceNumber1, $referenceRelationship1, $reference2, $referenceNumber2, $referenceRelationship2, $reference3, $referenceNumber3, $referenceRelationship3, $email)
+    {
+        $sql = "INSERT INTO clients_character_references (`char_ref1_name`,`char_ref1_no`,`char_ref1_relationship`,`char_ref2_name`,`char_ref2_no`,`char_ref2_relationship`,`char_ref3_name`,`char_ref3_no`,`char_ref3_relationship`,`application_no`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+
+        if (!$this->connect()->prepare($sql)) {
+            echo "Failed to create application";
+            exit();
+        } else {
+            $stmt = $this->connect()->prepare($sql);
+            $singleClient = $this->singleClientFromNewApp($email);
+            $applicationNo = $singleClient['application_no'];
+            $stmt->execute([$reference1, $referenceNumber1, $referenceRelationship1, $reference2, $referenceNumber2, $referenceRelationship2, $reference3, $referenceNumber3, $referenceRelationship3, $applicationNo]);
+        }
+    }
+
+    //create new Clients Application History
+    protected function createNewCAH($verifier, $email)
+    {
+        $sql = "INSERT INTO clients_application_history (`verifier`,`application_no`) VALUES (?,?)";
+
+        if (!$this->connect()->prepare($sql)) {
+            echo "Failed to create application";
+            exit();
+        } else {
+            $stmt = $this->connect()->prepare($sql);
+            $singleClient = $this->singleClientFromNewApp($email);
+            $applicationNo = $singleClient['application_no'];
+            $stmt->execute([$verifier, $applicationNo]);
+        }
+    }
+
+    //create new Clients Address
+    protected function createNewCA($houseNumber, $street, $barangay, $city, $municipality, $zipCode, $addressRemarks, $mapLink, $permanentAddress, $email)
+    {
+        $sql = "INSERT INTO clients_address (`house_no`,`street`,`barangay`,`city`,`municipality`,`zip_code`,`address_remarks`,`map_link`,`permanent_address`,`application_no`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+
+        if (!$this->connect()->prepare($sql)) {
+            echo "Failed to create application";
+            exit();
+        } else {
+            $stmt = $this->connect()->prepare($sql);
+            $singleClient = $this->singleClientFromNewApp($email);
+            $applicationNo = $singleClient['application_no'];
+            $stmt->execute([$houseNumber, $street, $barangay, $city, $municipality, $zipCode, $addressRemarks, $mapLink, $permanentAddress, $applicationNo]);
+        }
+    }
 
     // getting all clients data from database
     protected function show_details($status)
@@ -190,7 +331,7 @@ class DbhModelClients extends dbh
     {
         $sql = "SELECT application_no FROM clients_personal_information WHERE application_no = ?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute(['$applicationNo']);
+        $stmt->execute([$applicationNo]);
         $rowCount = $stmt->rowCount();
 
 
@@ -278,13 +419,12 @@ class DbhModelClients extends dbh
 
     protected function singleClientFromNewApp($email)
     {
-        $sql = "SELECT * FROM new_application where personal_email = ?";
+        $sql = "SELECT * FROM clients_personal_information WHERE email = ?";
         $stmt = $this->connect()->prepare($sql);
 
         if ($stmt->execute([$email])) {
-            $rowCount = $stmt->rowCount();
-            $result = $stmt->fetchAll();
-            return array($rowCount, $result);
+            $result = $stmt->fetch();
+            return $result;
         } else {
             die();
         }
@@ -348,5 +488,32 @@ class DbhModelClients extends dbh
         $sql = "INSERT INTO inprocess_application (`application_no`,`contract_no`,`first_name`,`middle_name`,`last_name`,`contact_no1`,`contact_no2`,`contact_no3`,`company_no1`,,`company_no2`,`reference_contact_no1`,`reference_contact_no2`,`reference_contact_no3`,`date_applied`,`personal_email`,`address`,`verifier_name`,`verified_by`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([]);
+    }
+
+
+    protected function sampleFunction($tableName)
+    {
+        $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$tableName]);
+        return $stmt->fetchAll();
+    }
+
+    public function sampleInsert($tableName, $array)
+    {
+        $sql = "INSERT INTO clients_personal_information VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([array($array)]);
+    }
+
+    protected function sampleGet($applicaitonNo)
+    {
+        $sql = "CALL addClient(?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$applicaitonNo]);
+        // $result = $stmt->fetch();
+
+        // return $result;
+        return;
     }
 } /* end of class scope */

@@ -38,11 +38,11 @@ function displayBirthday() {
 displayBirthday();
 
 dateHire.onchange = () => {
-  __dateKeyup(dateHire.value, dateHireSpan);
+  __dateHire(dateHire.value, dateHireSpan);
 };
 
 dateHire.addEventListener("keyup", () => {
-  __dateKeyup(dateHire.value, dateHireSpan);
+  __dateHire(dateHire.value, dateHireSpan);
 });
 
 function __dateKeyup(dateValue, dateSpan) {
@@ -56,6 +56,21 @@ function __dateKeyup(dateValue, dateSpan) {
     dateSpan.style.color = "Red";
   } else {
     dateSpan.innerHTML = `${newBirthday} Years old`;
+    dateSpan.style.color = "yellow";
+  }
+}
+
+function __dateHire(dateValue, dateSpan) {
+  let dateInput = new moment(dateValue);
+  let dateHire = m.diff(dateInput, "month");
+
+  if (isNaN(dateHire) || dateHire < 0) {
+    dateSpan.innerHTML = "";
+  } else if (dateHire < 6) {
+    dateSpan.innerHTML = `${dateHire} months employed`;
+    dateSpan.style.color = "Red";
+  } else {
+    dateSpan.innerHTML = `${dateHire} months employed`;
     dateSpan.style.color = "yellow";
   }
 }
@@ -328,6 +343,8 @@ function getTotalNet(originalNetpay, unofficialExpenses, totalNetpay) {
     totalNetpay.style.backgroundColor = "red";
   } else {
     totalNetpay.value = sumofNet.toLocaleString();
+    totalNetpay.style.backgroundColor = "rgba(239, 239, 239, 0.3)";
+    totalNetpay.style.color = "white";
   }
 }
 

@@ -36,6 +36,10 @@ body * input {
   text-align: center;
 }
 
+.total-netpay input {
+  color: white;
+}
+
 .container-header {
   display: flex;
   align-items: center;

@@ -40,17 +40,6 @@ class ClientsController extends DbhModelClients
         }
     }
 
-    // sample action for add new button to redirect to verifierDashboard when addnew button is not clicked
-    public function add_new()
-    {
-        $addnew = filter_input(INPUT_GET, 'addNew');
-        if (!$addnew) {
-            return;
-        } else {
-            header("location: verifierDashboard.php");
-        }
-    }
-
     public function saveRemarksandAttachment()
     {
         if (isset($_POST['save-remarks'])) {
@@ -302,6 +291,133 @@ class ClientsController extends DbhModelClients
         }
     }
 
+    public function addClient()
+    {
+        if (isset($_POST['submit-edit'])) {
+            $firstname = htmlEntities($_POST['firstname']);
+            $middlename = htmlEntities($_POST['middlename']);
+            $lastname = htmlEntities($_POST['lastname']);
+            $birthday = htmlEntities($_POST['birthday']);
+            $gender = htmlEntities($_POST['gender']);
+            $dependent = htmlEntities($_POST['dependent']);
+            $email = htmlEntities($_POST['email']);
+            $alternateEmail = htmlEntities($_POST['alternate-email']);
+            $facebookLink = htmlEntities($_POST['facebook-link']);
+            $placeOfBirth = htmlEntities($_POST['place-of-birth']);
+            $civilStatus = htmlEntities($_POST['civil-status']);
+            $primaryNumber = htmlEntities($_POST['primary-number']);
+            $postpaidPrepaid = htmlEntities($_POST['postpaid-prepaid']);
+            $postpaidPlan = htmlEntities($_POST['postpaid-plan']);
+            $primaryNumberRemarks = htmlEntities($_POST['primary-number-remarks']);
+            $alternateNumber = htmlEntities($_POST['alternate-number']);
+            $postpaidPrepaidAlternate = htmlEntities($_POST['postpaid-prepaid-alternate']);
+            $postpaidPlanAlternate = htmlEntities($_POST['postpaid-plan-alternate']);
+            $alternateNumberRemarks = htmlEntities($_POST['alternate-number-remarks']);
+            $houseNumber = htmlEntities($_POST['house-number']);
+            $street = htmlEntities($_POST['street']);
+            $barangay = htmlEntities($_POST['barangay']);
+            $city = htmlEntities($_POST['city']);
+            $municipality = htmlEntities($_POST['municipality']);
+            $zipCode = htmlEntities($_POST['zip-code']);
+            $addressRemarks = htmlEntities($_POST['address-remarks']);
+            $mapLink = htmlEntities($_POST['map-link']);
+            $permanentAddress = htmlEntities($_POST['permanent-address']);
+            $sssNumber = htmlEntities($_POST['sss-number']);
+            $husbandName = htmlEntities($_POST['husband-name']);
+            $husbandWork = htmlEntities($_POST['husband-work']);
+            $husbandRemarks = htmlEntities($_POST['husband-remarks']);
+            $motherName = htmlEntities($_POST['mother-name']);
+            $motherWork = htmlEntities($_POST['mother-work']);
+            $motherAddress = htmlEntities($_POST['mother-address']);
+            $companyName = htmlEntities($_POST['company-name']);
+            $companyAddress = htmlEntities($_POST['company-address']);
+            $agencyName = htmlEntities($_POST['agency-name']);
+            $branchSiteAddress = htmlEntities($_POST['branch-site-address']);
+            $lineOfBusiness = htmlEntities($_POST['line-of-business']);
+            $companyNo1 = htmlEntities($_POST['company-no1']);
+            $companyNo2 = htmlEntities($_POST['company-no2']);
+            $dateHire = htmlEntities($_POST['date-hire']);
+            $position = htmlEntities($_POST['position']);
+            $natureOfWork = htmlEntities($_POST['nature-of-work']);
+            $companyStatus = htmlEntities($_POST['company-status']);
+            $basicSalary = htmlEntities($_POST['basic-salary']);
+            $net1 = htmlEntities($_POST['net-1']);
+            $net2 = htmlEntities($_POST['net-2']);
+            $net3 = htmlEntities($_POST['net-3']);
+            $net4 = htmlEntities($_POST['net-4']);
+            $payrollType = htmlEntities($_POST['payroll-type']);
+            $payrollDate1 = htmlEntities($_POST['payroll-date1']);
+            $payrollDate2 = htmlEntities($_POST['payroll-date2']);
+            $payrollDate3 = htmlEntities($_POST['payroll-date3']);
+            $payrollDate4 = htmlEntities($_POST['payroll-date4']);
+            $planToTransfer = htmlEntities($_POST['plan-to-transfer']);
+            $loanHistory1 = htmlEntities($_POST['loan-history1']);
+            $loanAmount1 = htmlEntities($_POST['loan-amount1']);
+            $loanHistory2 = htmlEntities($_POST['loan-history2']);
+            $loanAmount2 = htmlEntities($_POST['loan-amount2']);
+            $loanHistory3 = htmlEntities($_POST['loan-history3']);
+            $loanAmount3 = htmlEntities($_POST['loan-amount3']);
+            $requestedAmount = htmlEntities($_POST['requested-amount']);
+            $requestedTerm = htmlEntities($_POST['requested-term']);
+            $purposeOfLoan = htmlEntities($_POST['purpose-of-loan']);
+            $primaryBank = htmlEntities($_POST['primary-bank']);
+            $accountNumber = htmlEntities($_POST['account-number']);
+            $alternateBankName = htmlEntities($_POST['alternate-bank-name']);
+            $alternateAccountNumber = htmlEntities($_POST['alternate-account-number']);
+            $netpay = htmlEntities($_POST['netpay']);
+            $additionalExpenses = htmlEntities($_POST['additional-expenses']);
+            $approveAmount = htmlEntities($_POST['approve-amount']);
+            $approveTerm = htmlEntities($_POST['approve-term']);
+            $disbursementDate = htmlEntities($_POST['disbursement-date']);
+            $reference1 = htmlEntities($_POST['reference-1']);
+            $referenceNumber1 = htmlEntities($_POST['reference-number-1']);
+            $referenceRelationship1 = htmlEntities($_POST['reference-relationship-1']);
+            $reference2 = htmlEntities($_POST['reference-2']);
+            $referenceNumber2 = htmlEntities($_POST['reference-number-2']);
+            $referenceRelationship2 = htmlEntities($_POST['reference-relationship-2']);
+            $reference3 = htmlEntities($_POST['reference-3']);
+            $referenceNumber3 = htmlEntities($_POST['reference-number-3']);
+            $referenceRelationship3 = htmlEntities($_POST['reference-relationship-3']);
+
+            $forFoward = "For Forward";
+
+            $this->createNewCPI($firstname, $middlename, $lastname, $birthday, $gender, $dependent, $email, $alternateEmail, $facebookLink, $placeOfBirth, $civilStatus, $primaryNumber, $postpaidPrepaid, $postpaidPlan, $primaryNumberRemarks, $alternateNumber, $postpaidPrepaidAlternate, $postpaidPlanAlternate, $alternateNumberRemarks, $sssNumber, $husbandName, $husbandWork, $husbandRemarks, $motherName, $motherWork, $motherAddress, $forFoward);
+            $this->createNewCLH($loanHistory1, $loanAmount1, $loanHistory2, $loanAmount2, $loanHistory3, $loanAmount3, $email);
+            $this->createNewCLBD($requestedAmount, $requestedTerm, $purposeOfLoan, $primaryBank, $accountNumber, $alternateBankName, $alternateAccountNumber, $netpay, $additionalExpenses, $approveAmount, $disbursementDate, $approveTerm, $email);
+            $this->createNewCJD($companyName, $companyAddress, $agencyName, $branchSiteAddress, $lineOfBusiness, $companyNo1, $companyNo2, $dateHire, $position, $natureOfWork, $companyStatus, $basicSalary, $net1, $net2, $net3, $net4, $payrollType, $payrollDate1, $payrollDate2, $payrollDate3, $payrollDate4, $planToTransfer, $email);
+            $this->createNewCCR($reference1, $referenceNumber1, $referenceRelationship1, $reference2, $referenceNumber2, $referenceRelationship2, $reference3, $referenceNumber3, $referenceRelationship3, $email);
+
+            $verifier = $this->getUserLogin();
+            $this->createNewCAH($verifier, $email);
+            $this->createNewCA($houseNumber, $street, $barangay, $city, $municipality, $zipCode, $addressRemarks, $mapLink, $permanentAddress, $email);
+
+            $action = "Created application by";
+            $applicationNo = $this->getSingleClientUsingEmail($email);
+            $this->addClientsHistory($applicationNo, $action);
+            header("Location: ../login.php");
+        } else {
+            header("Location: ../login.php");
+        }
+    }
+
+    private function getUserLogin()
+    {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+
+        $userLogin = $_SESSION['userData']['name'];
+        return  $userLogin;
+    }
+
+    private function getSingleClientUsingEmail($email)
+    {
+        $applicationNo = $this->singleClientFromNewApp($email);
+
+        return $applicationNo['application_no'];
+    }
+
     public function forwardToSVO()
     {
         if (isset($_POST['button-forward'])) {
@@ -542,13 +658,15 @@ class ClientsController extends DbhModelClients
 
     public function sampleRemarks()
     {
-        // if (isset($_POST['view-details'])) {
-        //     $id = $_POST['viewDetailsHidden'];
-        //     $clientToSave = $this->get_clients_information($id);
+        if (isset($_POST)) {
+            // $email = $_POST['email'];
+            $email = "test7@email.com";
+            $tableName = "clients_personal_information";
+            $array = array_slice($_POST, 0, 31);
+            $aplicaionNo = 101010;
+            $clientToSave = $this->sampleGet($aplicaionNo);
 
-        //     return $clientToSave;
-        // }
-        $id = $_SESSION['editClient']['id'];
-        return           $this->get_clients_information($id);
+            return $clientToSave;
+        }
     }
 } // end of ClientsController scope

@@ -4,10 +4,6 @@ require_once('./headerVerifierDashboard.php');
 ?>
 <section class="container-body">
     <header>
-        <div class="search">
-            <input type="search" name="search" id="" placeholder="SEARCH">
-        </div>
-
         <div class="data-navigation">
             <div class="active" data-tab-target="#table-details-fresh">Fresh</div>
             <div data-tab-target="#table-details-inprocess">In Process</div>
@@ -15,97 +11,110 @@ require_once('./headerVerifierDashboard.php');
         </div>
     </header>
     <div class="container-1st">
-        <table class="active" data-tab-content id="table-details-fresh">
-            <thead>
-                <tr>
-                    <td>Application No</td>
-                    <td>Name</td>
-                    <td>Contact number</td>
-                    <td>Email</td>
-                    <td colspan="2">Action</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <?php foreach ($viewDetails->show_fresh_clients() as $viewDetail) : ?>
-                        <td><?php echo $viewDetail['application_no']; ?></td>
-                        <td><?php echo $viewDetail['firstname'] . " " . $viewDetail['middlename'] . " " . $viewDetail['lastname']; ?></td>
-                        <td><?php echo $viewDetail['primary_no']; ?></td>
-                        <td><?php echo $viewDetail['email']; ?></td>
-                        <form method="POST">
-                            <td class="td-buttons">
-                                <input type="submit" class="btn btn-primary" name="view-details" value="View">
-                                <input type="hidden" name="viewDetailsHidden" id="viewDetailsHidden" value="<?php echo $viewDetail['application_no']; ?>">
-                                <input type="submit" class="btn btn-danger <?php echo $viewDetail['application_no']; ?>" id="delete" name="delete" value="Delete">
-                            </td>
-                        </form>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
+        <div class="container active" data-tab-content id="table-details-fresh">
+            <div class="row">
+                <div>
+                    <table class="table active table-bordered table-striped table-hover" id="data-table">
+                        <thead>
+                            <tr>
+                                <th>Application No</th>
+                                <th>Name</th>
+                                <th>Contact number</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($viewDetails->show_fresh_clients() as $viewDetail) : ?>
+                                <tr>
+                                    <td><?php echo $viewDetail['application_no']; ?></td>
+                                    <td><?php echo $viewDetail['firstname'] . " " . $viewDetail['middlename'] . " " . $viewDetail['lastname']; ?></td>
+                                    <td><?php echo $viewDetail['primary_no']; ?></td>
+                                    <td><?php echo $viewDetail['email']; ?></td>
+                                    <form method="POST">
+                                        <td class="td-buttons">
+                                            <input type="submit" class="btn btn-primary" name="view-details" value="View">
+                                            <input type="hidden" name="viewDetailsHidden" id="viewDetailsHidden" value="<?php echo $viewDetail['application_no']; ?>">
+                                            <input type="submit" class="btn btn-danger <?php echo $viewDetail['application_no']; ?>" id="delete" name="delete" value="Delete">
+                                        </td>
+                                    </form>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-        </table>
+        <div class="container" data-tab-content id="table-details-inprocess">
+            <div class="row">
+                <div>
+                    <table class="table table-bordered table-striped table-hover" id="data-table">
+                        <thead>
+                            <tr>
+                                <th>Application No</th>
+                                <th>Name</th>
+                                <th>Contact number</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($viewDetails->show_inprocess_clients() as $viewDetail) : ?>
+                                <tr>
+                                    <td><?php echo $viewDetail['application_no']; ?></td>
+                                    <td><?php echo $viewDetail['firstname'] . " " . $viewDetail['middlename'] . " " . $viewDetail['lastname']; ?></td>
+                                    <td><?php echo $viewDetail['primary_no']; ?></td>
+                                    <td><?php echo $viewDetail['email']; ?></td>
+                                    <form method="POST">
+                                        <td class="td-buttons">
+                                            <input type="submit" class="btn btn-primary" name="view-details" value="View">
+                                            <input type="hidden" name="viewDetailsHidden" id="viewDetailsHidden" value="<?php echo $viewDetail['application_no']; ?>">
+                                            <input type="submit" class="btn btn-danger <?php echo $viewDetail['application_no']; ?>" id="delete" name="delete" value="Delete">
+                                        </td>
+                                    </form>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-        <table data-tab-content id="table-details-inprocess">
-            <thead>
-                <tr>
-                    <td>Application No</td>
-                    <td>Name</td>
-                    <td>Contact number</td>
-                    <td>Email</td>
-                    <td colspan="2">Action</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <?php foreach ($viewDetails->show_inprocess_clients() as $viewDetail) : ?>
-                        <td><?php echo $viewDetail['application_no']; ?></td>
-                        <td><?php echo $viewDetail['firstname'] . " " . $viewDetail['middlename'] . " " . $viewDetail['lastname']; ?></td>
-                        <td><?php echo $viewDetail['primary_no']; ?></td>
-                        <td><?php echo $viewDetail['email']; ?></td>
-                        <form method="POST">
-                            <td class="td-buttons">
-                                <input type="submit" class="btn btn-primary" name="view-details" value="View" id="inprocess-view">
-                                <input type="hidden" name="viewDetailsHidden" id="viewDetailsHidden" value="<?php echo $viewDetail['application_no']; ?>">
-                                <input type="submit" class="btn btn-danger" name="delete" value="Delete">
-                            </td>
-                        </form>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-
-        </table>
-
-        <table data-tab-content id="table-details-return">
-            <thead>
-                <tr>
-                    <td>Order ID </td>
-                    <td>Name</td>
-                    <td>Contact number</td>
-                    <td>Email</td>
-                    <td colspan="2">Action</td>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($viewDetails->show_return_clients() as $key) : ?>
-                    <tr>
-                        <form method="POST">
-                            <td><?php echo $key['id']; ?></td>
-                            <td><?php echo $key['firstname'] . " " . $key['middlename'] . " " . $key['lastname']; ?></td>
-                            <td><?php echo $key['contact_no1']; ?></td>
-                            <td><?php echo $key['personal_email']; ?></td>
-
-                            <!-- <form action'#' method="POST"></form> -->
-                            <td class="td-buttons">
-                                <input type="submit" class="btn btn-primary" name="view-details" value="View">
-                                <input type="button" class="btn btn-danger" id="delete" value="Delete" />
-                                <input hidden name="viewDetailsHidden" id="viewDetailsHidden" value="<?php echo $key['id']; ?>" />
-
-                            </td>
-                        </form>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+        <div class="container" data-tab-content id="table-details-return">
+            <div class="row">
+                <div>
+                    <table class="table active table-bordered table-striped table-hover" id="data-table">
+                        <thead>
+                            <tr>
+                                <th>Application No</th>
+                                <th>Name</th>
+                                <th>Contact number</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($viewDetails->show_return_clients() as $viewDetail) : ?>
+                                <tr>
+                                    <td><?php echo $viewDetail['application_no']; ?></td>
+                                    <td><?php echo $viewDetail['firstname'] . " " . $viewDetail['middlename'] . " " . $viewDetail['lastname']; ?></td>
+                                    <td><?php echo $viewDetail['primary_no']; ?></td>
+                                    <td><?php echo $viewDetail['email']; ?></td>
+                                    <form method="POST">
+                                        <td class="td-buttons">
+                                            <input type="submit" class="btn btn-primary" name="view-details" value="View">
+                                            <input type="hidden" name="viewDetailsHidden" id="viewDetailsHidden" value="<?php echo $viewDetail['application_no']; ?>">
+                                            <input type="submit" class="btn btn-danger <?php echo $viewDetail['application_no']; ?>" id="delete" name="delete" value="Delete">
+                                        </td>
+                                    </form>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 

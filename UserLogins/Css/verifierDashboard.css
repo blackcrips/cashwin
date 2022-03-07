@@ -106,20 +106,7 @@ body {
 
 header {
   display: flex;
-  justify-content: space-between;
-}
-
-.search {
-  position: relative;
-  align-items: baseline;
-  width: 30%;
-  padding: 10px;
-}
-
-.search input {
-  position: absolute;
-  bottom: 10%;
-  right: 0;
+  justify-content: flex-end;
 }
 
 .data-navigation {
@@ -151,6 +138,9 @@ header {
   left: 23%;
   transform: translate(-10%, 0);
   display: block;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
 }
 
 .active[data-tab-target] {
@@ -162,10 +152,10 @@ header {
 
 [data-tab-content] {
   display: none;
+  width: 100%;
 }
 
 .active[data-tab-content] {
-  width: 100%;
   display: inline-table;
 }
 
@@ -412,7 +402,6 @@ legend {
 
 .container-textArea {
   display: flex;
-  max-height: 80%;
   max-width: 100%;
   margin: 20px 0;
 }
@@ -424,8 +413,8 @@ legend {
 }
 
 .textArea {
-  height: 100%;
   width: 100%;
+  height: 80%;
   text-align: start;
   outline: none;
   padding: 5px;
