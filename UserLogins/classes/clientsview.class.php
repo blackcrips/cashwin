@@ -3,63 +3,40 @@
 class ClientsView extends DbhModelClients
 {
 
-    // showing all client's details to fresh bucket
-    public function show_fresh_clients()
-    {
-        $status = "Fresh";
-        return $this->show_details($status);
-    }
-
-    // showing all client's details to inprocess bucket
-    public function show_inprocess_clients()
-    {
-        $status = "Inprocess";
-        $activeUser = $_SESSION['userData']['name'];
-        return $this->show_details_inprocess($status, $activeUser);
-        // $status, $activeUser
-    }
-
-    // showing all client's details to inprocess bucket
-    public function show_return_clients()
-    {
-        $status = "Return";
-        $activeUser = $_SESSION['userData']['name'];
-        return $this->show_details_inprocess($status, $activeUser);
-    }
-
     // getting client's details when view button is clicked
-    public function view_single_client_details()
+    public function view_single_client_details($request)
     {
-        if (isset($_POST['view-details'])) {
-            $applicationNo = $_POST['viewDetailsHidden'];
-            $singleClientData =  $this->get_client_details($applicationNo);
+        $singleClientData =  $this->get_client_details($request);
 
-            return $singleClientData;
-        }
+        return $singleClientData;
     }
 
     public function editClient()
     {
-        if (isset($_POST['edit'])) {
-            $applicationNo = $_POST['save-ids'];
-            $editClient = $this->get_client_details($applicationNo);
+        if (isset($_POST['save-ids'])) {
+            $applicationNo = $_POST['application_no'];
 
             $_SESSION['editClient'] = array(
-                'id' => $editClient[0]['application_no']
+                'id' => $applicationNo
             );
 
             header("Refresh: 0");
         }
     }
 
-    public function displayClientDetails()
+    public function displayClientDetails($id)
     {
-        if ($_SESSION['editClient'] == '' || $_SESSION['editClient'] == null) {
+        $displayDetails = $this->get_client_details($id);
+        return $displayDetails;
+    }
+
+    public function showForEditDetails($id)
+    {
+        if (!isset($_SESSION['editClient']) || $_SESSION['editClient']['id'] == '') {
             header("Location: ../../login.php");
         } else {
-            $id = $_SESSION['editClient']['id'];
-            $editClient = $this->get_clients_information($id);
-            return $editClient;
+            $displayDetails = $this->get_clients_information($id);
+            return $displayDetails;
         }
     }
 
@@ -69,7 +46,7 @@ class ClientsView extends DbhModelClients
             $id = $_POST['viewDetailsHidden'];
             $singleClient = $this->get_client_details($id);
 
-            if ($singleClient[0]['status'] == 'Inprocess' || $singleClient[0]['status'] == 'Return') {
+            if ($singleClient[0]['status'] == 'In Process' || $singleClient[0]['status'] == 'Return') {
                 echo 'hidden';
             } else {
                 return;

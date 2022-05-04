@@ -8,8 +8,6 @@ $clientView->getClientData();
 $clientController = new NewAppController();
 $clientController->updateUser();
 
-
-
 ?>
 
 

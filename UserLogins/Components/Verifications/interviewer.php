@@ -1,11 +1,12 @@
 <?php
 require_once('../../inc/autoLoadClasses.inc.php');
 session_start();
-$addNew = new ClientsController();
+$clientsController = new ClientsController();
 $clientsView = new ClientsView();
 $bankNames = new BankAccountsView();
 $bankNames->bankname_dropdown();
 $clientsView->editClient();
+
 
 
 ?>
@@ -50,7 +51,7 @@ $clientsView->editClient();
         <div class="container-information">
 
             <form action="../../inc/interviewer.inc.php" id="form" method="POST">
-                <?php foreach ($clientsView->displayClientDetails() as $key) : ?>
+                <?php foreach ($clientsView->showForEditDetails($_SESSION['editClient']['id']) as $key) : ?>
                     <div id="tab-content">
                         <div id="personal-information" data-tab-content class="active">
                             <div class="label-header">

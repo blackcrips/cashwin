@@ -42,8 +42,7 @@ if (isset($_POST['view-details'])) {
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <link rel="stylesheet" href="../../css/verifierDashboard.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/dashboard.css" class="rel">
-    <title>Verifier Dashboard</title>
+    <title>Verifier Dashboardsss</title>
 </head>
 
 <body class="" id="body">

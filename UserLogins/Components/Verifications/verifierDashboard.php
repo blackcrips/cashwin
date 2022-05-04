@@ -1,17 +1,45 @@
 <?php
-require_once('./headerVerifierDashboard.php');
+require_once('../Header/header.php');
+
+$viewDetails = new ClientsView();
+$userDetails = new AgentsController;
+$agentsView = new Agentsview;
+$deleteUser = new ClientsController;
+
+$deleteUser->forwardToSVO();
+$deleteUser->delete_user();
+$deleteUser->transfer_fresh();
+$deleteUser->direct_dashboard();
+
+$active = '';
+
+
+if (isset($_POST['view-details'])) {
+    $active = 'active';
+}
 
 ?>
+<div>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <link rel="stylesheet" href="../../css/verifierDashboard.css">
+
+</div>
 <section class="container-body">
     <header>
-        <div class="data-navigation">
-            <div class="active" data-tab-target="#table-details-fresh">Fresh</div>
-            <div data-tab-target="#table-details-inprocess">In Process</div>
-            <div data-tab-target="#table-details-return">Return</div>
+        <div class="data-navigation" id="data-navigation">
+            <div class="active tabTarget" data-tab-target="#table-details-fresh" id="tabTarget">Fresh</div>
+            <div data-tab-target="#table-details-inprocess" class="tabTarget">In Process</div>
+            <div data-tab-target="#table-details-return" class="tabTarget">Return</div>
         </div>
     </header>
     <div class="container-1st">
-        <div class="container active" data-tab-content id="table-details-fresh">
+        <div class="container active " data-tab-content id="table-details-fresh">
             <div class="row">
                 <div>
                     <table class="table active table-bordered table-striped table-hover" id="data-table">
@@ -21,283 +49,141 @@ require_once('./headerVerifierDashboard.php');
                                 <th>Name</th>
                                 <th>Contact number</th>
                                 <th>Email</th>
-                                <th>Action</th>
+                                <th class="th-table">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <?php foreach ($viewDetails->show_fresh_clients() as $viewDetail) : ?>
-                                <tr>
-                                    <td><?php echo $viewDetail['application_no']; ?></td>
-                                    <td><?php echo $viewDetail['firstname'] . " " . $viewDetail['middlename'] . " " . $viewDetail['lastname']; ?></td>
-                                    <td><?php echo $viewDetail['primary_no']; ?></td>
-                                    <td><?php echo $viewDetail['email']; ?></td>
-                                    <form method="POST">
-                                        <td class="td-buttons">
-                                            <input type="submit" class="btn btn-primary" name="view-details" value="View">
-                                            <input type="hidden" name="viewDetailsHidden" id="viewDetailsHidden" value="<?php echo $viewDetail['application_no']; ?>">
-                                            <input type="submit" class="btn btn-danger <?php echo $viewDetail['application_no']; ?>" id="delete" name="delete" value="Delete">
-                                        </td>
-                                    </form>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="container" data-tab-content id="table-details-inprocess">
-            <div class="row">
-                <div>
-                    <table class="table table-bordered table-striped table-hover" id="data-table">
-                        <thead>
-                            <tr>
-                                <th>Application No</th>
-                                <th>Name</th>
-                                <th>Contact number</th>
-                                <th>Email</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($viewDetails->show_inprocess_clients() as $viewDetail) : ?>
-                                <tr>
-                                    <td><?php echo $viewDetail['application_no']; ?></td>
-                                    <td><?php echo $viewDetail['firstname'] . " " . $viewDetail['middlename'] . " " . $viewDetail['lastname']; ?></td>
-                                    <td><?php echo $viewDetail['primary_no']; ?></td>
-                                    <td><?php echo $viewDetail['email']; ?></td>
-                                    <form method="POST">
-                                        <td class="td-buttons">
-                                            <input type="submit" class="btn btn-primary" name="view-details" value="View">
-                                            <input type="hidden" name="viewDetailsHidden" id="viewDetailsHidden" value="<?php echo $viewDetail['application_no']; ?>">
-                                            <input type="submit" class="btn btn-danger <?php echo $viewDetail['application_no']; ?>" id="delete" name="delete" value="Delete">
-                                        </td>
-                                    </form>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="container" data-tab-content id="table-details-return">
-            <div class="row">
-                <div>
-                    <table class="table active table-bordered table-striped table-hover" id="data-table">
-                        <thead>
-                            <tr>
-                                <th>Application No</th>
-                                <th>Name</th>
-                                <th>Contact number</th>
-                                <th>Email</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($viewDetails->show_return_clients() as $viewDetail) : ?>
-                                <tr>
-                                    <td><?php echo $viewDetail['application_no']; ?></td>
-                                    <td><?php echo $viewDetail['firstname'] . " " . $viewDetail['middlename'] . " " . $viewDetail['lastname']; ?></td>
-                                    <td><?php echo $viewDetail['primary_no']; ?></td>
-                                    <td><?php echo $viewDetail['email']; ?></td>
-                                    <form method="POST">
-                                        <td class="td-buttons">
-                                            <input type="submit" class="btn btn-primary" name="view-details" value="View">
-                                            <input type="hidden" name="viewDetailsHidden" id="viewDetailsHidden" value="<?php echo $viewDetail['application_no']; ?>">
-                                            <input type="submit" class="btn btn-danger <?php echo $viewDetail['application_no']; ?>" id="delete" name="delete" value="Delete">
-                                        </td>
-                                    </form>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-
-
-<!-- overlay or modal for logout button when clicked -->
-<div class="container-overlay" id="container-overlay">
-    <div class="modal-logout">
-        <div class="modal-logout-header">
-            <p>Confirm Logout</p>
-        </div>
-        <div class="modal-logout-message">
-            <p>Are you sure you want to logout?</p>
-        </div>
-        <div class="modal-buttons">
-            <form action="../../logout.php" method="POST">
-                <button type="submit" class="btn btn-danger" name="log-out">YES</button>
-            </form>
-            <button class="btn btn-primary" id="modal-cancel">CANCEL</button>
-        </div>
+<div class="view-details" id="view-details">
+    <div class="cancel-button">
+        <div class="cancel-button-inside" data-cancel-inside id="cancel-button-inside"></div>
     </div>
-</div>
 
-<!-- overlay or modal when view button is clicked -->
-<div class="view-details <?php echo $active ?>" id="view-details">
-    <form method="post" enctype="multipart/form-data">
-        <?php foreach ((array)$viewDetails->view_single_client_details() as $viewDetail) : ?>
-            <div class="cancel-button">
-                <div class="cancel-button-inside" id="cancel-button-inside"></div>
+    <div class="container-information">
+        <div class="container-information-child">
+            <div class="container-information-left">
+                <div class="container-view-appNumber">
+                    <label for="view-appNumber">Application Number: </label>
+                    <span id="application_no"></span>
+                    <input type="hidden" name='id' value="" />
+                </div>
+
+                <div class="container-view-name">
+                    <label for="view-name">Name: </label>
+                    <span id="view-name"></span>
+                </div>
+
+                <div class="container-view-address">
+                    <label>Address: </label>
+                    <span id="address"></span>
+                </div>
+
+                <div class="container-view-cNumber">
+                    <label for="view-cNumber">Contact Number: </label>
+                    <span id="primary_no"></span>
+                </div>
+
+                <div class="container-view-altNumber">
+                    <label>Alternate Number: </label>
+                    <span id="alternate-number"></span>
+                </div>
+
+                <div class="container-view-gender">
+                    <label>Gender: </label>
+                    <span id="gender"></span>
+                </div>
+
+                <div class="container-view-email">
+                    <label>Email: </label>
+                    <span id="email"></span>
+                </div>
+
+                <div class="container-view-compName">
+                    <label>Company Name: </label>
+                    <span id="company_name"></span>
+                </div>
+
+                <div class="container-view-position">
+                    <label>Position: </label>
+                    <span id="position"></span>
+                </div>
+
+                <div class="container-view-dateHire">
+                    <label>Date Hire: </label>
+                    <span id="date_hired"></span>
+                </div>
+
+                <div class="container-view-salary">
+                    <label>Salary: </label>
+                    <span id="salary"></span>
+                </div>
+
+                <div class="container-view-bankDetails">
+                    <label>Bank Details: </label>
+                    <span id="primary_bank"></span>
+                </div>
+
             </div>
 
-            <div class="container-information">
-                <div class="container-information-child">
-                    <div class="container-information-left">
-                        <div class="container-view-appNumber">
-                            <label for="view-appNumber">Application Number: </label>
-                            <span><?php echo $viewDetail['application_no']; ?></span>
-                            <input type="hidden" name='id' value="<?php echo $viewDetail['application_no']; ?>" />
+            <div class="container-information-right">
+                <form action="../../inc/saveRemarksAndAttachment.inc.php" id="form-attachments" method="post" enctype="multipart/form-data">
+                    <div class="view-details-right-top">
+                        <div class="container-attachment">
+                            <fieldset class="fieldAttachment" id="fieldAttachment">
+                                <legend>Attachment</legend>
+                                <div class="view-uploaded-file">
+                                    <!-- <button name="view-govtId" type="submit">ID</button> -->
+                                    <a class="btn btn-primary" id="attachment1" href="../../image.php?application_no=&filename=Attachment0" target="_blank" rel="noopener noreferrer">ID</a>
+
+                                    <a class="btn btn-primary" href="../../image.php?application_no=&filename=Attachment1" target="_blank" rel="noopener noreferrer">COID</a>
+
+                                    <a class="btn btn-primary" href="../../image.php?application_no=&filename=Attachment2" target="_blank" rel="noopener noreferrer">POI</a>
+
+                                    <a class="btn btn-primary" href="../../image.php?application_no=&filename=Attachment3" target="_blank" rel="noopener noreferrer">POB</a>
+
+                                    <a class="btn btn-primary" href="../../image.php?application_no=&filename=Attachment4" target="_blank" rel="noopener noreferrer">ATM</a>
+
+                                    <a class="btn btn-primary" href="../../image.php?application_no=&filename=Attachment5" target="_blank" rel="noopener noreferrer">OTHERS</a>
+                                </div>
+                            </fieldset>
                         </div>
 
-                        <div class="container-view-name">
-                            <label for="view-name">Name: </label>
-                            <span><?php echo $viewDetail['firstname'] . " " . $viewDetail['middlename'] . " " . $viewDetail['lastname']; ?></span>
+                        <div class="container-textArea">
+                            <fieldset class="fTextArea">
+                                <legend>Remarks</legend>
+                                <textarea class="textArea" name='remarks-field'></textarea>
+                            </fieldset>
                         </div>
 
-                        <div class="container-view-address">
-                            <label>Address: </label>
-                            <span><?php echo $viewDetail['house_no'] . " " . $viewDetail['street'] . " " .  $viewDetail['barangay'] . " " .  $viewDetail['city'] . " " .  $viewDetail['municipality']; ?></span>
-                        </div>
-
-                        <div class="container-view-cNumber">
-                            <label for="view-cNumber">Contact Number: </label>
-                            <span><?php echo $viewDetail['primary_no']; ?></span>
-                        </div>
-
-                        <div class="container-view-altNumber">
-                            <label>Alternate Number: </label>
-                            <span><?php echo $viewDetail['secondary_no']; ?></span>
-                        </div>
-
-                        <div class="container-view-gender">
-                            <label>Gender: </label>
-                            <span><?php echo $viewDetail['gender']; ?></span>
-                        </div>
-
-                        <div class="container-view-email">
-                            <label>Email: </label>
-                            <span><?php echo $viewDetail['email']; ?></span>
-                        </div>
-
-                        <div class="container-view-compName">
-                            <label>Company Name: </label>
-                            <span><?php echo $viewDetail['company_name']; ?></span>
-                        </div>
-
-                        <div class="container-view-position">
-                            <label>Position: </label>
-                            <span><?php echo $viewDetail['position']; ?></span>
-                        </div>
-
-                        <div class="container-view-dateHire">
-                            <label>Date Hire: </label>
-                            <span><?php echo $viewDetail['date_hired']; ?></span>
-                        </div>
-
-                        <div class="container-view-salary">
-                            <label>Salary: </label>
-                            <span><?php echo $viewDetail['basic_salary']; ?></span>
-                        </div>
-
-                        <div class="container-view-bankDetails">
-                            <label>Bank Details: </label>
-                            <span><?php echo $viewDetail['primary_bank']; ?></span>
-                        </div>
-
-                    </div>
-
-                    <div class="container-information-right">
-                        <div class="view-details-right-top">
-                            <div class="container-attachment">
-                                <fieldset class="fieldAttachment">
-                                    <legend>Attachment</legend>
-                                    <div class="view-uploaded-file">
-                                        <!-- <button name="view-govtId" type="submit">ID</button> -->
-                                        <a class="btn btn-primary" href="../../image.php?application_no=<?php echo $viewDetail['application_no'] . '&filename=Attachment0'; ?>" target="_blank" rel="noopener noreferrer">ID</a>
-
-                                        <a class="btn btn-primary" href="../../image.php?application_no=<?php echo $viewDetail['application_no'] . '&filename=Attachment1'; ?>" target="_blank" rel="noopener noreferrer">COID</a>
-
-                                        <a class="btn btn-primary" href="../../image.php?application_no=<?php echo $viewDetail['application_no'] . '&filename=Attachment2'; ?>" target="_blank" rel="noopener noreferrer">POI</a>
-
-                                        <a class="btn btn-primary" href="../../image.php?application_no=<?php echo $viewDetail['application_no'] . '&filename=Attachment3'; ?>" target="_blank" rel="noopener noreferrer">POB</a>
-
-                                        <a class="btn btn-primary" href="../../image.php?application_no=<?php echo $viewDetail['application_no'] . '&filename=Attachment4'; ?>" target="_blank" rel="noopener noreferrer">ATM</a>
-
-                                        <a class="btn btn-primary" href="../../image.php?application_no=<?php echo $viewDetail['application_no'] . '&filename=Attachment5'; ?>" target="_blank" rel="noopener noreferrer">OTHERS</a>
-                                    </div>
-
-                                    <?php if ($viewDetail['status'] !== "Fresh") {
-                                        echo "<div class='file-upload'>
-                                                <div class='file-upload-container'>
-                                                    <input type='file' name='file-govtid' id='govt-id' />
-                                                    <label>*File type must be maximum of 25mb* - GOV'T ID</label>
-                                                    <input type='file' name='file-coid' />
-                                                    <label>*File type must be maximum of 25mb* - COID</label>
-                                                    <input type='file' name='file-poi' />
-                                                    <label>*File type must be maximum of 25mb* - POI</label>
-                                                </div>
-                                                <div class='file-upload-container'>
-                                                    <input type='file' name='file-pob' />
-                                                    <label>*File type must be maximum of 25mb* - POB</label>
-                                                    <input type='file' name='file-atm' />
-                                                    <label>*File type must be maximum of 25mb* - ATM</label>
-                                                    <input type='file' name='file-others' />
-                                                    <label>*File type must be maximum of 25mb* - OTHERS</label>
-                                                </div>
-                                            </div>";
-                                    }
-                                    ?>
-
-                                </fieldset>
-                            </div>
-
-                            <div class="container-textArea">
-                                <fieldset class="fTextArea">
-                                    <legend>Remarks</legend>
-                                    <textarea class="textArea" name='remarks-field'><?php echo $viewDetail['remarks']; ?></textarea>
-                                </fieldset>
-                            </div>
 
 
-
-                            <div class="container-view-button">
-                                <?php if ($viewDetail['for_forward'] == 'Forward') {
-                                    echo "<button type='submit' class='btn btn-success' name='button-forward'>Forward</button>";
-                                } ?>
-                                <?php if ($viewDetail['status'] == 'Fresh') {
-                                    echo "<button type='submit' name='btnInprocess' class='btn btn-success'>In Process</button>";
-                                } ?>
-                                <button type="submit" class="btn btn-primary" name="save-remarks">Save</button>
-                                <input class="btn btn-info" hidden name="save-id" value="<?php echo $viewDetail['application_no']; ?>" />
-                                <input type="hidden" name="inprocessValue" value="inprocess">
-                                <button type="button" class="btn btn-danger" id="bottom-cancel">Cancel</button>
-                            </div>
+                        <div class="container-view-button">
+                            <button type="submit" class="btn btn-primary" name="save-remarks" id="save-remarks">Save</button>
+                            <input type="hidden" name="save-id" id="save-id" />
+                            <input type="hidden" name="inprocessValue" value="inprocess">
+                            <button type='submit' name='btnInprocess' class='btn btn-success' id='inprocess'>In Process</button>
+                            <button type="button" class="btn btn-danger" data-cancel-inside id="bottom-cancel">Cancel</button>
                         </div>
                     </div>
-                </div>
-    </form>
-
-    <form action="./interviewer.php" method="POST">
-        <div class="view-details-right-bottom">
-            <?php if ($viewDetail['status'] !== 'Fresh') {
-                echo "<button type='submit' name='edit' class='btn btn-primary'>Edit</button>";
-            } ?>
-
-            <input class="btn btn-info" hidden name="save-ids" value="<?php echo $viewDetail['application_no']; ?>" />
+                </form>
+            </div>
         </div>
-    </form>
-</div>
-<?php endforeach; ?>
-</div>
-<div class="overlay <?php echo $active ?>" id="overlay"></div>
+        <form action="./interviewer.php" method="POST">
+            <div class="view-details-right-bottom">
+                <input type="submit" class="btn btn-info" name="save-ids" id="save-ids" />
+
+                <input type="hidden" name="application_no" id="app_no" />
+            </div>
+        </form>
+    </div>
 
 
+</div>
+<div class="overlay" id="overlay" data-cancel-inside></div>
 <script src="../../Js/verifierDashboard.js"></script>
 </body>
 

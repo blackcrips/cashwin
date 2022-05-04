@@ -61,6 +61,12 @@ class NewAppController extends NewAppModel
         return $checkEmail[0];
     }
 
+    protected function mobileNumberExist($mobileNumber)
+    {
+        $checkMobileNumber = $this->checkExistingMobileNumber($mobileNumber);
+        return $checkMobileNumber;
+    }
+
     protected function createClientAccount($firstname, $middlename, $lastname, $email, $password, $mobileNumber)
     {
         $this->createNewClientRecord($firstname, $middlename, $lastname, $email, $mobileNumber);

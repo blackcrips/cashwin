@@ -514,3 +514,7 @@ buttonForward.onclick = () => {
     }
   }
 };
+
+$(document).ready(function () {
+  $("table").DataTable();
+});

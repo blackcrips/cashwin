@@ -68,9 +68,16 @@ class Step1Validation extends NewAppController
             exit();
         }
 
+        if ($this->mobileNumberTaken() == false) {
+            echo    "<script>
+                        alert('Mobile number already exist!');
+                    </script>";
+            header('refresh: 0');
+            exit();
+        }
+
         // $this->createClientAccount($firstname, $middlename, $lastname, $email, $password, $mobileNumber);
-        $output = $this->createClientAccount($this->firstname, $this->middlename, $this->lastname, $this->email, $this->password, $this->mobileNumber);
-        return $output;
+        $this->createClientAccount($this->firstname, $this->middlename, $this->lastname, $this->email, $this->password, $this->mobileNumber);
     }
 
     private function emptyInput()
@@ -128,6 +135,18 @@ class Step1Validation extends NewAppController
     {
         $result = '';
         if ($this->checkExistingEmail($this->email) > 0) {
+            $result = false;
+        } else {
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    private function mobileNumberTaken()
+    {
+        $result = '';
+        if ($this->mobileNumberExist($this->mobileNumber) > 0) {
             $result = false;
         } else {
             $result = true;

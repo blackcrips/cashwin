@@ -5,10 +5,13 @@ if (!isset($_SESSION)) {
 }
 
 $clientView = new NewAppView();
-$clientView->getClientData();
+$clientView->getClientDataExisting();
 
 $clientController = new NewAppController();
 $clientController->updateUser();
+
+
+
 ?>
 
 
@@ -28,7 +31,7 @@ $clientController->updateUser();
 <body>
     <div class="step2-body">
         <form method="post" enctype="multipart/form-data">
-            <?php foreach ($clientView->getClientData() as $data) :  ?>
+            <?php foreach ($clientView->getClientDataExisting() as $data) :  ?>
                 <div class="col-md-12 container-head">
                     <h4 class="col-md-12">Personal Information</h4>
                     <div class="col-md-12 d-flex ">
@@ -52,12 +55,12 @@ $clientController->updateUser();
                 <div class="col-md-12 d-flex container-head">
                     <div class="col-md-4 d-flex flex-column">
                         <label for="email">Email:</label>
-                        <input type="text" disabled id="email" value="<?php echo $data['personal_email'] ?>">
-                        <input type="text" hidden name="email" id="email" value="<?php echo $data['personal_email'] ?>">
+                        <input type="text" disabled id="email" value="<?php echo $data['email'] ?>">
+                        <input type="text" hidden name="email" id="email" value="<?php echo $data['email'] ?>">
                     </div>
                     <div class="col-md-4 d-flex flex-column">
                         <label for="contact-number">Contact number:</label>
-                        <input type="text" disabled name="contact-number" id="contact-number" value="<?php echo $data['contact_no1'] ?>">
+                        <input type="text" disabled name="contact-number" id="contact-number" value="<?php echo $data['primary_no'] ?>">
                     </div>
                 </div>
 

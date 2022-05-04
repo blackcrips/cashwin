@@ -1,23 +1,10 @@
 <?php
 require_once('../../inc/autoLoadClasses.inc.php');
 session_start();
-$viewDetails = new ClientsView();
 $userDetails = new AgentsController;
-$deleteUser = new ClientsController;
+$clientsController = new ClientsController;
 
-$viewDetails->showForwardedApplications();
-$deleteUser->saveRemarksandAttachment();
-$deleteUser->delete_user();
-$deleteUser->direct_dashboard();
-
-
-$active = '';
-
-
-if (isset($_POST['view-details'])) {
-    $active = 'active';
-}
-
+$clientsController->direct_dashboard();
 
 ?>
 <!DOCTYPE html>
@@ -27,20 +14,14 @@ if (isset($_POST['view-details'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="../../Css/svoDashboard.css">
-    <link rel="stylesheet" href="../../css/dashboard.css" class="rel">
-    <title>Senior Verification Dashboard</title>
+    <link rel="stylesheet" href="../../Css/header.css">
+    <script src="../../Js/header.js" defer></script>
+    <title>Verifier Dashboard</title>
 </head>
 
-<body class="" id="body">
+<body id="body">
     <div class="header" id="header">
         <div class="tab-design" id="tab-design">
             <div class="tab-1"></div>
@@ -116,4 +97,22 @@ if (isset($_POST['view-details'])) {
             <label>You are logged in as <?php echo $userDetails->set_userdata()['name']; ?> </label>
         </div>
 
+    </div>
+
+    <!-- overlay or modal for logout button when clicked -->
+    <div class="container-overlay" id="container-overlay">
+        <div class="modal-logout">
+            <div class="modal-logout-header">
+                <p>Confirm Logout</p>
+            </div>
+            <div class="modal-logout-message">
+                <p>Are you sure you want to logout?</p>
+            </div>
+            <div class="modal-buttons">
+                <form action="../../logout.php" method="POST">
+                    <button type="submit" class="btn btn-danger" name="log-out">YES</button>
+                </form>
+                <button class="btn btn-primary" id="modal-cancel">CANCEL</button>
+            </div>
+        </div>
     </div>

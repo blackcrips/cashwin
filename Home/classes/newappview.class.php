@@ -25,4 +25,14 @@ class NewAppView extends NewAppModel
             return $getData[1];
         }
     }
+
+    public function getClientDataExisting()
+    {
+        if (!$_SESSION['clientData'] || $_SESSION['clientData'] == null || $_SESSION['clientData'] == '') {
+            header("Location: login.php");
+        } else {
+            $getData = $this->getClientDetails($_SESSION['clientData']['email']);
+            return $getData[1];
+        }
+    }
 }

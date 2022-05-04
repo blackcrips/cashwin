@@ -1,16 +1,18 @@
 <?php
 
-  class Dbh {
+class Dbh
+{
 
-    private $host = "localhost";
-    private $username = "root";
-    private $password = "123456";
-    private $dbname = "cash_win";
+  private $host = "localhost";
+  private $username = "root";
+  private $password = "123456";
+  private $dbname = "cash_win";
 
-    protected function  connect() {
-      $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
-      $pdo = new PDO($dsn, $this->username, $this->password);
-      $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-      return $pdo;
-    }
+  protected function  connect()
+  {
+    $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
+    $pdo = new PDO($dsn, $this->username, $this->password);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    return $pdo;
   }
+}

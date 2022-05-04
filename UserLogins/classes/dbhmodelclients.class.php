@@ -16,6 +16,27 @@ class DbhModelClients extends dbh
         }
     }
 
+    protected function getSpecificDetails($applicationNo)
+    {
+        $sql = "SELECT 
+        application_no,
+        remarks
+        
+        FROM clients_personal_information pi 
+        JOIN clients_application_history ah 
+            USING (application_no)
+        WHERE pi.application_no = ?";
+
+        $stmt = $this->connect()->prepare($sql);
+
+        if ($stmt->execute([$applicationNo])) {
+            $result = $stmt->fetchAll();
+            return $result;
+        } else {
+            die();
+        }
+    }
+
     private function updateStaticApplicationNo($application_no)
     {
         $sql = "UPDATE clients_personal_information SET application_no = :application_no WHERE id = 1";
@@ -162,33 +183,8 @@ class DbhModelClients extends dbh
         return $result;
     }
 
-    // getting clients information based on the given username and status
-    protected function show_details_inprocess($status, $activeUser)
-    {
-        $sql = "SELECT 
-            firstname, 
-            middlename, 
-            lastname,
-            primary_no, 
-            email, 
-            pi.application_no, 
-            ah.verifier,
-            pi.status
-        FROM clients_personal_information pi 
-        JOIN clients_application_history ah 
-            USING (application_no)
-        WHERE pi.status = ? 
-        AND ah.verifier = ?";
-
-
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$status, $activeUser]);
-        $result = $stmt->fetchAll();
-        return $result;
-    }
-
     //fetching single clients information from server
-    protected function get_client_details($applicationNo)
+    protected function get_client_details($id)
     {
         $sql = "SELECT 
         application_no, 
@@ -211,10 +207,55 @@ class DbhModelClients extends dbh
         municipality,
         status,
         for_forward,
-        ah.remarks,
-        ah.application_history,
-        ah.contract_remarks,
-        ah.accounts_remarks
+        pi.id
+        remarks
+
+        FROM clients_personal_information pi 
+        JOIN clients_job_description jd 
+            using (application_no)
+        JOIN clients_loan_and_bank_details lbd
+            using (application_no)
+        JOIN clients_address a
+            using (application_no)
+        JOIN clients_application_history ah
+            using (application_no)
+        WHERE pi.id = ?";
+
+        $stmt = $this->connect()->prepare($sql);
+
+        if (!$stmt->execute([$id])) {
+            echo "Error connection";
+        } else {
+            $result = $stmt->fetchAll();
+
+            exit(json_encode($result));
+        }
+    }
+
+    protected function get_specific_client_details($applicationNo)
+    {
+        $sql = "SELECT 
+        application_no, 
+        firstname,
+        middlename,
+        lastname,
+        gender,
+        primary_no,
+        secondary_no,
+        email,
+        company_name,
+        position,
+        date_hired,
+        basic_salary,
+        primary_bank,
+        house_no,
+        street,
+        barangay,
+        city,
+        municipality,
+        status,
+        for_forward,
+        remarks
 
         FROM clients_personal_information pi 
         JOIN clients_job_description jd 
@@ -228,10 +269,14 @@ class DbhModelClients extends dbh
         WHERE pi.application_no = ?";
 
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$applicationNo]);
-        $result = $stmt->fetchAll();
 
-        return $result;
+        if (!$stmt->execute([$applicationNo])) {
+            echo "Error connection";
+        } else {
+            $result = $stmt->fetchAll();
+
+            return $result;
+        }
     }
 
     protected function get_clients_information($applicationNo)
@@ -258,6 +303,19 @@ class DbhModelClients extends dbh
         $result = $stmt->fetchAll();
 
         return $result;
+    }
+
+    protected function fetchApplicationNo($id)
+    {
+        $sql = "SELECT application_no FROM clients_personal_information WHERE id=?";
+        $stmt = $this->connect()->prepare($sql);
+
+        if (!$stmt->execute([$id])) {
+            die();
+        } else {
+            $result = $stmt->fetchAll();
+            return $result;
+        }
     }
 
     // Delete single record from database
@@ -399,9 +457,9 @@ class DbhModelClients extends dbh
 
     protected function uploadDocuments($name, $type, $applicationNO)
     {
-        $sql = "SELECT application_id FROM uploaded_files WHERE application_id = ?";
+        $sql = "SELECT application_id,name FROM uploaded_files WHERE application_id = ? AND name = ?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$applicationNO]);
+        $stmt->execute([$applicationNO, $name]);
         $rowCount = $stmt->rowCount();
 
 
@@ -515,5 +573,17 @@ class DbhModelClients extends dbh
 
         // return $result;
         return;
+    }
+
+    protected function deleteSingleApplication($applicationNO)
+    {
+        $sql = "DELETE FROM clients_personal_information WHERE application_no = ?";
+        $stmt = $this->connect()->prepare($sql);
+
+        if (!$stmt->execute([$applicationNO])) {
+            die();
+        } else {
+            return;
+        }
     }
 } /* end of class scope */

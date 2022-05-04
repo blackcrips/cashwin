@@ -1,115 +1,154 @@
-//setting event listener to open modal when logout is clicked
-let btnLogout = document.getElementById("btn-logout");
-let overlay = document.getElementById("container-overlay");
-let btnLogoutCancel = document.getElementById("modal-cancel");
-let body = document.getElementById("body");
-
-btnLogout.addEventListener("click", () => {
-  overlay.classList.add("active");
-  body.classList.add("active-body");
-});
-
-btnLogoutCancel.addEventListener("click", () => {
-  overlay.classList.remove("active");
-  body.classList.remove("active-body");
-});
-
-// adding click event for navigation fresh/inprocess/return to display content
-let targetTables = document.querySelectorAll("[data-tab-target]");
-let tabContents = document.querySelectorAll("[data-tab-content]");
-
-targetTables.forEach((targetTable) => {
-  targetTable.addEventListener("click", () => {
-    let target = document.querySelector(targetTable.dataset.tabTarget);
-    tabContents.forEach((tabContent) => {
-      tabContent.classList.remove("active");
+$(document).ready(function () {
+  function displayData(status) {
+    let dataTable = $("#data-table").DataTable({
+      processing: true,
+      // serverSide: true,
+      order: [],
+      ajax: {
+        url: "../../inc/extractData.inc.php",
+        method: "POST",
+        data: {
+          request_status: status,
+        },
+      },
     });
-    targetTables.forEach((targetTable) => {
-      targetTable.classList.remove("active");
-    });
-    targetTable.classList.add("active");
-    target.classList.add("active");
-  });
-});
-
-//setting event listener to open modal when view button is clicked
-let viewButtonOverlay = document.getElementById("overlay");
-let viewButtonCancel = document.getElementById("bottom-cancel");
-let viewButtonXicon = document.getElementById("cancel-button-inside");
-let viewButtonContent = document.getElementById("view-details");
-
-function overlayAutoLoad() {
-  if (viewButtonContent.className.includes("active")) {
-    document.querySelector("body").style.overflowY = " hidden";
-    viewButtonOverlay.addEventListener("click", () => {
-      closeOverlay();
-    });
-
-    viewButtonCancel.addEventListener("click", () => {
-      closeOverlay();
-    });
-
-    viewButtonXicon.addEventListener("click", () => {
-      closeOverlay();
-    });
-  } else {
-    return;
   }
-}
 
-function closeOverlay() {
-  viewButtonOverlay.classList.remove("active");
-  viewButtonContent.classList.remove("active");
-  window.location.href = "../../login.php";
-}
+  displayData("Fresh");
 
-overlayAutoLoad();
+  let targetTables = $(".tabTarget");
+  targetTables.click(function () {
+    targetTables.removeClass("active");
+    $(this).addClass("active");
 
-/* adding 'active' class to inprocess tab when button view clicked
-this will prevent the page for returning the active tab to 'Fresh' 
-tab everytime the button view is clicked in 'inprocess' tab */
-
-let btnInprocessViews = document.querySelectorAll("inprocess-view");
-let inprocessTab = document.getElementById("table-details-inprocess");
-let freshTab = document.getElementById("table-details-fresh");
-
-btnInprocessViews.forEach((btnInprocessView) => {
-  btnInprocessView.addEventListener("click", () => {
-    inprocessTab.classList.add("active");
+    $("#data-table").DataTable().clear().destroy();
+    displayData($(this).text());
   });
-});
 
-let formDelete = document.getElementById("asdfasdf");
-let deleteButtons = document.querySelectorAll("#delete");
-let hiddenId = document.querySelectorAll("#viewDetailsHidden");
+  function showEditButton(bucket) {
+    if (bucket == "Fresh") {
+      $("#save-ids").hide();
+      $("#inprocess").show();
+    } else {
+      $("#save-ids").show();
+      $("#save-ids").val("Edit");
+      $("#inprocess").hide();
+    }
+  }
 
-deleteButtons.forEach((deleteButton) => {
-  deleteButton.addEventListener("click", (e) => {
+  //setting event listener to open modal when view button is clicked
+  let viewButtonOverlay = $("#overlay");
+  let viewButtonContent = $("#view-details");
+
+  function getClientDetails(id) {
+    $.post(
+      "../../inc/getClientDetails.php",
+      { get_single_client: id },
+      function (data) {
+        data = jQuery.parseJSON(data);
+        $.each(data, function (i, item) {
+          $("#application_no").html(item.application_no);
+          $("#view-name").html(
+            item.firstname + " " + item.middlename + " " + item.lastname
+          );
+          $("#address").html(
+            item.house_no +
+              " " +
+              item.street +
+              " " +
+              item.barangay +
+              " " +
+              item.city +
+              " " +
+              item.municipality
+          );
+          $("#primary_no").html(item.primary_no);
+          $("#alternate_no").html(item.secondary_no);
+          $("#gender").html(item.gender);
+          $("#email").html(item.email);
+          $("#company_name").html(item.company_name);
+          $("#position").html(item.position);
+          $("#date_hired").html(item.date_hired);
+          $("#salary").html(item.basic_salary);
+          $("#primary_bank").html(item.primary_bank);
+
+          let attachments = $(".view-uploaded-file").children();
+          let attachmentsURL = `../../image.php?application_no=${item.application_no}&filename=Attachment`;
+
+          for (let i = 0; i < attachments.length; i++) {
+            attachments[i].href = attachmentsURL + i;
+          }
+
+          $("#fieldAttachment").append(displayAttachmentsOption(item.status));
+
+          $("#save-id").val(item.application_no);
+          $("#app_no").val(item.application_no);
+          showEditButton(item.status);
+        });
+      }
+    ).fail(function () {
+      console.log("error");
+    });
+  }
+
+  function displayAttachmentsOption(status) {
+    if (status == "Fresh") {
+      return;
+    } else {
+      let attachmentsOption = `<div class='file-upload' id='file-upload'>
+                                  <div class='file-upload-container'>
+                                      <input type='file' name='file-govtid' class='attachments' />
+                                      <label>*File type must be maximum of 25mb* - GOV'T ID</label>
+                                      <input type='file' name='file-coid' class='attachments' />
+                                      <label>*File type must be maximum of 25mb* - COID</label>
+                                      <input type='file' name='file-poi' class='attachments' />
+                                      <label>*File type must be maximum of 25mb* - POI</label>
+                                  </div>
+                                  <div class='file-upload-container'>
+                                      <input type='file' name='file-pob' class='attachments' />
+                                      <label>*File type must be maximum of 25mb* - POB</label>
+                                      <input type='file' name='file-atm' class='attachments' />
+                                      <label>*File type must be maximum of 25mb* - ATM</label>
+                                      <input type='file' name='file-others' class='attachments' />
+                                      <label>*File type must be maximum of 25mb* - OTHERS</label>
+                                  </div>
+                              </div>`;
+      return attachmentsOption;
+    }
+  }
+
+  $(document).on("click", "[data-view-details]", function () {
+    viewButtonOverlay.addClass("active");
+    viewButtonContent.addClass("active");
+    $(document.body).css("overflow-y", "hidden");
+
+    let viewDetailsID = $(this).parent().children("#viewDetailsHidden").val();
+
+    getClientDetails(viewDetailsID);
+  });
+
+  let cancelButtons = $("[data-cancel-inside]");
+
+  cancelButtons.on("click", function () {
+    viewButtonOverlay.removeClass("active");
+    viewButtonContent.removeClass("active");
+    $(document.body).css("overflow-y", "visible");
+
+    $("#fieldAttachment").children("#file-upload").html("");
+    $("#save-ids").hide();
+    $("#inprocess").hide();
+  });
+
+  $("#save-remarks").on("click", function (e) {
     e.preventDefault();
+    $("#form-attachments").submit();
+  });
+
+  $(document).on("click", "#delete", function () {
     if (confirm("Are you sure you want to delete this application?") == true) {
-      let slicedId = deleteButton.className.slice(15, 27);
-      console.log(slicedId);
-      window.location.href = `verifierDashboard.php?delete=${slicedId}`;
+      $("#form-action-buttons").submit();
+    } else {
+      return;
     }
   });
-});
-
-let burger = document.getElementById("tab-design");
-let headerNav = document.getElementById("header");
-let containerNavigation = document.getElementById("container-navigation");
-
-burger.addEventListener("click", () => {
-  if (burger.classList.contains("active")) {
-    burger.classList.remove("active");
-    headerNav.classList.remove("active");
-    containerNavigation.classList.remove("active");
-  } else {
-    burger.classList.add("active");
-    headerNav.classList.add("active");
-    containerNavigation.classList.add("active");
-  }
-});
-
-$(document).ready(function () {
-  $("table").DataTable();
 });

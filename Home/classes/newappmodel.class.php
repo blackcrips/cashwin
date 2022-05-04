@@ -41,6 +41,18 @@ class NewAppModel extends Dbh
             $this->updateStaticApplicationNo($newStaticApplicationNo);
 
             $stmt->execute([$firstname, $middlename, $lastname, $email, $mobileNumber, $application_no, $status]);
+
+            $arrayData = ['clients_loan_history', 'clients_loan_and_bank_details', 'clients_job_description', 'clients_character_references', 'clients_address'];
+            $this->insertInitialData($arrayData, $this->getApplicationNo($email)[0]['application_no']);
+        }
+    }
+
+    private function insertInitialData($arrayData, $applicationNo)
+    {
+        for ($i = 0; $i < count($arrayData); $i++) {
+            $sql = "INSERT INTO " . $arrayData[$i] . "(`application_no`) VALUES(?)";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$applicationNo]);
         }
     }
 
@@ -98,20 +110,52 @@ class NewAppModel extends Dbh
         }
     }
 
+    // fetch to clients_personal_information
+    protected function checkExistingMobileNumber($mobileNumber)
+    {
+        $sql = "SELECT * FROM clients_personal_information WHERE primary_no = ?";
+        $stmt = $this->connect()->prepare($sql);
+
+        if ($stmt->execute([$mobileNumber])) {
+            $rowCount = $stmt->rowCount();
+            return $rowCount;
+        } else {
+            die();
+        }
+    }
+
     // fetch to new_application
     protected function singleClientFromNewApp($email)
     {
         $getApplicationNo = $this->getApplicationNo($email);
         $applicationNo = $getApplicationNo[0]['application_no'];
 
+        $sql = "SELECT * FROM clients_personal_information WHERE application_no = $applicationNo";
+
+        $stmt = $this->connect()->prepare($sql);
+
+        if ($stmt->execute()) {
+            $rowCount = $stmt->rowCount();
+            $result = $stmt->fetchAll();
+            return array($rowCount, $result);
+        } else {
+            die();
+        }
+    }
+
+    protected function getClientDetails($email)
+    {
+        $getApplicationNo = $this->getApplicationNo($email);
+        $applicationNo = $getApplicationNo[0]['application_no'];
+
         $sql = "SELECT * FROM clients_personal_information pi 
         JOIN clients_job_description jd ON pi.application_no = jd.application_no 
-        JOIN clients_address a ON pi.application_no = a.application_no 
+        JOIN clients_address ad ON pi.application_no = ad.application_no 
         JOIN clients_loan_and_bank_details lbd ON pi.application_no = lbd.application_no WHERE pi.application_no = $applicationNo";
 
         $stmt = $this->connect()->prepare($sql);
 
-        if ($stmt->execute([$email])) {
+        if ($stmt->execute()) {
             $rowCount = $stmt->rowCount();
             $result = $stmt->fetchAll();
             return array($rowCount, $result);

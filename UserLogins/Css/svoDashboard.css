@@ -7,130 +7,97 @@
 }
 
 body {
-  position: static;
   height: 100vh;
   background-color: #eee;
-  overflow-y: auto;
+  display: flex;
 }
 
+/* Navigation Styles */
 .header {
-  position: fixed;
-  width: 100%;
-  height: 50px;
+  width: 0;
+  height: 100vh;
   display: flex;
-  background: #96baff;
-  top: 0;
+  background: #1f1d36;
   z-index: 2;
-  justify-content: space-between;
+  flex-direction: column;
+  transition: width 1s;
 }
 
-.container-navigation {
-  margin-left: 40px;
-  padding-top: 5px;
+.active.header {
+  width: 200px;
 }
 
-.navigation ul li {
-  list-style: none;
-  display: inline-block;
-  line-height: 40px;
-}
-
-.navigation ul li a,
-.add-new a {
-  padding: 0 10px;
-  font-family: sans-serif;
-  font-size: 18px;
-  text-decoration: none;
-  display: block;
-  transition: all 0.5s;
-}
-
-.orr-sub {
-  position: Relative;
-  width: 100px;
-  text-align: center;
-}
-
-.orr-sub ul li {
-  width: 100%;
-  font-size: 18px;
-}
-
-.container-orr-sublist {
-  position: absolute;
-  display: none;
-  transition: all 0.35s ease-in-out;
-  padding-top: 10px;
-  background-color: #96baff;
-  padding: 0 10px;
-}
-
-.orr-sub:hover .container-orr-sublist {
-  display: block;
-}
-
-.navigation a:hover,
-.navigation a:focus {
-  color: white;
-
-  outline: none;
-}
-
-.add-new a:hover,
-.add-new a:focus {
-  background-color: #9fafcc;
-  border: none;
-  outline: none;
-}
-
-.container-profle {
-  display: flex;
-  margin-top: 5px;
-}
-
-.profile-picture {
+.tab-design {
   width: 40px;
-  height: 40px;
-  background-image: url("../img/blank-profile.png");
-  background-size: cover;
-  border-radius: 50%;
+  height: 45px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: flex-end;
+  transition: width 1s;
 }
 
-.navigation-profile {
-  margin: 0 10px;
-  height: 35px;
-  overflow: hidden;
-  line-height: 40px;
-  transition: all 0.4s ease-in-out;
-}
-
-.navigation-profile li {
-  list-style: none;
-  text-align: right;
-}
-
-.navigation-profile a {
-  font-size: 22px;
-  text-decoration: none;
-  display: block;
-  font-family: sans-serif;
-  color: #000;
-  font-style: italic;
-  font-weight: bold;
-}
-
-.navigation-profile a:hover {
-  /* background-color: #7C83FD; */
-  border-radius: 5px 20px 20px 5px;
-  padding-right: 10px;
-  transition: all 0.3s ease-in-out;
-}
-
-.navigation-profile:hover {
-  height: 130px;
+.tab-design:hover {
   cursor: pointer;
 }
 
+.tab-design div {
+  background-color: white;
+  height: 4px;
+  width: 35px;
+  margin-left: 10px;
+}
+
+.active.tab-design {
+  width: 100%;
+  padding-right: 10px;
+  transition: all 1s;
+}
+
+.container-navigation {
+  opacity: 0;
+  transition: all 1s;
+  pointer-events: none;
+  white-space: nowrap;
+  color: white;
+}
+
+.active.container-navigation {
+  opacity: 1;
+  transition: all 1s;
+  pointer-events: all;
+}
+
+.active.container-navigation a {
+  color: white;
+}
+
+.container-profle {
+  background: #1f1d36;
+  display: flex;
+  width: 100%;
+  height: 45px;
+  justify-content: flex-end;
+}
+
+.user-login {
+  color: white;
+  margin-right: 10px;
+}
+
+.navigation li {
+  margin-bottom: 20px;
+  list-style: none;
+}
+
+.navigation ul {
+  margin-bottom: 20px;
+  list-style: none;
+  padding: 0;
+  margin-left: 10px;
+}
+
+/* Body styles */
 .container-1st {
   position: relative;
   width: 1200px;
@@ -142,25 +109,15 @@ body {
 
 header {
   display: flex;
-  justify-content: space-between;
-}
-
-.search {
-  position: relative;
-  align-items: baseline;
-  width: 30%;
-  padding: 10px;
-}
-
-.search input {
-  position: absolute;
-  bottom: 10%;
-  right: 0;
+  justify-content: flex-end;
 }
 
 .data-navigation {
+  min-width: 25%;
   display: flex;
+  justify-content: flex-end;
   flex-direction: row;
+  height: 100%;
 }
 
 .data-navigation div {
@@ -184,6 +141,10 @@ header {
   left: 23%;
   transform: translate(-10%, 0);
   display: block;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background-color: white;
 }
 
 .active[data-tab-target] {
@@ -195,10 +156,10 @@ header {
 
 [data-tab-content] {
   display: none;
+  width: 100%;
 }
 
 .active[data-tab-content] {
-  width: 100%;
   display: inline-table;
 }
 
@@ -408,6 +369,7 @@ header {
   justify-content: space-around;
   border: 1px solid black;
   flex-direction: column;
+  margin-top: 10px;
 }
 
 .file-upload {
@@ -445,7 +407,6 @@ legend {
 
 .container-textArea {
   display: flex;
-  max-height: 80%;
   max-width: 100%;
   margin: 20px 0;
 }
@@ -457,8 +418,8 @@ legend {
 }
 
 .textArea {
-  height: 100%;
   width: 100%;
+  height: 80%;
   text-align: start;
   outline: none;
   padding: 5px;

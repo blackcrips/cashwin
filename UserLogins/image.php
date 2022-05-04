@@ -1,5 +1,8 @@
 <?php
 require_once('./inc/autoLoadClassesLogin.inc.php');
+if (!isset($_SESSION)) {
+    session_start();
+}
 $viewDetails = new ClientsController();
 ?>
 

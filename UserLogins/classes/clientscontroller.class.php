@@ -19,7 +19,7 @@ class ClientsController extends DbhModelClients
     {
 
         $action = "Transferred From Fresh to In Process bucket";
-        $status = "Inprocess";
+        $status = "In Process";
 
         if (isset($_POST['btnInprocess'])) {
             $applicationNo = $_POST['save-id'];
@@ -40,58 +40,37 @@ class ClientsController extends DbhModelClients
         }
     }
 
-    public function saveRemarksandAttachment()
+    public function saveRemarksandAttachment($applicationNo, $filesUploaded, $remarks)
     {
-        if (isset($_POST['save-remarks'])) {
-            $applicationNo = $_POST['save-id'];
+        if ($remarks == "") {
 
-            $fileGovtId = $_FILES['file-govtid'];
-            $fileCoid = $_FILES['file-coid'];
-            $filePoi = $_FILES['file-poi'];
-            $filePob = $_FILES['file-pob'];
-            $fileAtm = $_FILES['file-atm'];
-            $fileOthers = $_FILES['file-others'];
-            $filesUploaded = [
-                $fileGovtId,
-                $fileCoid,
-                $filePoi,
-                $filePob,
-                $fileAtm,
-                $fileOthers
-            ];
-            $remarks = htmlspecialchars($_POST['remarks-field']);
+            $this->upLoadAttachments($filesUploaded, $applicationNo);
 
-            if ($remarks == "") {
-
-                $this->upLoadAttachments($filesUploaded, $applicationNo);
-
-                echo "<script>alert('Save Success!')</script>";
-                header("Refresh: 0");
-                return;
+            echo "<script>alert('Save Success!')</script>";
+            echo "<script>window.location.href = '../login.php'</script>";
+            return;
+        } else {
+            $this->upLoadAttachments($filesUploaded, $applicationNo);
+            $action = "Added remarks // " . $remarks;
+            $oldRemark = $this->get_specific_client_details($applicationNo);
+            if ($oldRemark[0]['remarks'] == $remarks) {
+                $action = "Added file // ";
+                $this->addClientsHistory($applicationNo, $action);
             } else {
-                $this->upLoadAttachments($filesUploaded, $applicationNo);
                 $action = "Added remarks // " . $remarks;
-                $oldRemark = $this->get_client_details($applicationNo);
-                if ($oldRemark[0]['remarks'] == $remarks) {
-                    $action = "Added file // ";
-                    $this->addClientsHistory($applicationNo, $action);
-                } else {
-                    $action = "Added remarks // " . $remarks;
-                    $this->addClientsHistory($applicationNo, $action);
-                    $this->update_remarks($remarks, $applicationNo);
-                }
-
-                echo "<script>alert('Remarks save!')</script>";
-                header("Refresh: 0");
-                return;
+                $this->addClientsHistory($applicationNo, $action);
+                $this->update_remarks($remarks, $applicationNo);
             }
+
+            echo "<script>alert('Remarks save!')</script>";
+            header("Refresh: 0");
+            return;
         }
     }
 
     private function upLoadAttachments($filesUploaded, $applicationNo)
     {
-        $clientToSave = $this->get_client_details($applicationNo);
-        $application_no = $clientToSave[0]['application_no'];
+        $clientToSave = $this->get_specific_client_details($applicationNo);
 
         for ($i = 0; $i < count($filesUploaded); $i++) {
             if ($filesUploaded[$i]['name'] == "") {
@@ -100,11 +79,11 @@ class ClientsController extends DbhModelClients
                 date_default_timezone_set("Asia/Taipei");
                 $loggedInUser = $_SESSION['userData']['name'];
                 $applicationHistory = "Uploaded files by {$loggedInUser} " . date('Y-m-d h:i:sa', strtotime('now')) . " // ";
-                $this->attachments($filesUploaded, $application_no);
+                $this->attachments($filesUploaded, $applicationNo);
                 $this->update_remarks($clientToSave[0]['remarks'], $applicationHistory, $applicationNo);
 
                 $action = "Added file";
-                $this->addClientsHistory($application_no, $action);
+                $this->addClientsHistory($applicationNo, $action);
             }
         }
     }
@@ -152,7 +131,7 @@ class ClientsController extends DbhModelClients
     private function finalAttachmentValidation($fileActualExt, $fileTmpName, $folderName, $index)
     {
 
-        $fileDestination = "../../../Uploads/" . $folderName . "/";
+        $fileDestination = "../../Uploads/" . $folderName . "/";
 
         if (!file_exists($fileDestination)) {
             mkdir($fileDestination, 077, true);
@@ -176,7 +155,9 @@ class ClientsController extends DbhModelClients
 
     public function getAttachment()
     {
-        if (isset($_GET['application_no'])) {
+        if (!isset($_GET['application_no']) or $_SESSION['userData']['name'] == '') {
+            header("Location: login.php");
+        } else {
             $applicationNo = $_GET['application_no'];
             $filename = $_GET['filename'];
 
@@ -460,6 +441,11 @@ class ClientsController extends DbhModelClients
         }
     }
 
+    public function getApplicationNo($id)
+    {
+        $applicationNo = $this->fetchApplicationNo($id);
+        return $applicationNo;
+    }
 
 
     // SVO Controller
@@ -504,6 +490,16 @@ class ClientsController extends DbhModelClients
         }
 
         return 'CM' . $s;
+    }
+
+    public function add_new()
+    {
+        $addnew = filter_input(INPUT_GET, 'addNew');
+        if (!$addnew) {
+            return;
+        } else {
+            header("location: verifierDashboard.php");
+        }
     }
 
     // Contracts controller
@@ -652,7 +648,10 @@ class ClientsController extends DbhModelClients
         }
     }
 
-
+    public function deleteApplication($applicationNo)
+    {
+        $this->deleteSingleApplication($applicationNo);
+    }
 
 
 

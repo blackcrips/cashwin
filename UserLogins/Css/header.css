@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  background-color: #eee;
+  display: flex;
+}
+
+/* Navigation Styles */
+.header {
+  width: 0;
+  height: 100vh;
+  display: flex;
+  background: #1f1d36;
+  z-index: 2;
+  flex-direction: column;
+  transition: width 1s;
+}
+
+.active.header {
+  width: 200px;
+}
+
+.tab-design {
+  width: 40px;
+  height: 45px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: flex-end;
+  transition: width 1s;
+}
+
+.tab-design:hover {
+  cursor: pointer;
+}
+
+.tab-design div {
+  background-color: white;
+  height: 4px;
+  width: 35px;
+  margin-left: 10px;
+}
+
+.active.tab-design {
+  width: 100%;
+  padding-right: 10px;
+  transition: all 1s;
+}
+
+.container-navigation {
+  opacity: 0;
+  transition: all 1s;
+  pointer-events: none;
+  white-space: nowrap;
+  color: white;
+}
+
+.active.container-navigation {
+  opacity: 1;
+  transition: all 1s;
+  pointer-events: all;
+}
+
+.active.container-navigation a {
+  color: white;
+}
+
+.container-profle {
+  background: #1f1d36;
+  display: flex;
+  width: 100%;
+  height: 45px;
+  justify-content: flex-end;
+}
+
+.user-login {
+  color: white;
+  margin-right: 10px;
+}
+
+.navigation li {
+  margin-bottom: 20px;
+  list-style: none;
+}
+
+.navigation ul {
+  margin-bottom: 20px;
+  list-style: none;
+  padding: 0;
+  margin-left: 10px;
+}
+
+/* setting up overlay/modal for logout button when clicked */
+.container-overlay.active {
+  pointer-events: all;
+  opacity: 1;
+  display: flex;
+  z-index: 5;
+}
+
+.container-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  transition: 200ms ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+}
+
+.modal-logout {
+  background-color: #fff;
+  width: 50%;
+  height: 24%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.modal-logout-header {
+  background-color: #96baff;
+  padding: 10px;
+  font-family: serif;
+  font-weight: bolder;
+  font-size: 30px;
+}
+
+.modal-logout-header p {
+  margin: 0;
+}
+
+.modal-logout-message {
+  padding: 5px 20px;
+  font-family: sans-serif;
+  min-height: 50%;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-buttons button {
+  margin-right: 10px;
+}
+
+.active-body {
+  height: 100%;
+  overflow: hidden;
+}

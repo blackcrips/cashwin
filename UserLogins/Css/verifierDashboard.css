@@ -62,10 +62,6 @@ body {
   color: white;
 }
 
-.expand {
-  margin-left: 40px;
-}
-
 .active.container-navigation {
   opacity: 1;
   transition: all 1s;
@@ -73,7 +69,6 @@ body {
 }
 
 .active.container-navigation a {
-  margin: 0 5px;
   color: white;
 }
 
@@ -92,6 +87,14 @@ body {
 
 .navigation li {
   margin-bottom: 20px;
+  list-style: none;
+}
+
+.navigation ul {
+  margin-bottom: 20px;
+  list-style: none;
+  padding: 0;
+  margin-left: 10px;
 }
 
 /* Body styles */
@@ -135,11 +138,10 @@ header {
 .container-body {
   position: absolute;
   top: 10%;
-  left: 23%;
+  left: 20%;
   transform: translate(-10%, 0);
   display: block;
   padding: 20px;
-  border: 1px solid #ccc;
   border-radius: 20px;
 }
 
@@ -159,93 +161,6 @@ header {
   display: inline-table;
 }
 
-.container-1st thead {
-  font-family: serif;
-  font-weight: bold;
-  text-align: center;
-  font-size: 20px;
-  border-bottom: 2px solid #eee;
-}
-
-.container-1st tbody {
-  font-family: sans-serif;
-  font-size: 14px;
-  align-items: center;
-  text-align: center;
-  padding-bottom: 10px;
-}
-
-.container-1st tr:nth-child(even) {
-  background-color: rgb(245, 242, 234);
-}
-
-.container-1st .td-buttons input {
-  margin: 5px 5px;
-}
-
-/* setting up overlay/modal for logout button when clicked */
-.container-overlay.active {
-  pointer-events: all;
-  opacity: 1;
-  display: flex;
-  z-index: 5;
-}
-
-.container-overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-  transition: 200ms ease-in-out;
-  opacity: 0;
-  pointer-events: none;
-  display: flex;
-}
-
-.modal-logout {
-  background-color: #fff;
-  width: 50%;
-  height: 24%;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.modal-logout-header {
-  background-color: #96baff;
-  padding: 10px;
-  font-family: serif;
-  font-weight: bolder;
-  font-size: 30px;
-}
-
-.modal-logout-header p {
-  margin: 0;
-}
-
-.modal-logout-message {
-  padding: 5px 20px;
-  font-family: sans-serif;
-  min-height: 50%;
-}
-
-.modal-buttons {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.modal-buttons button {
-  margin-right: 10px;
-}
-
-.active-body {
-  height: 100%;
-  overflow: hidden;
-}
-
 /* // modal for view button */
 .view-details {
   position: absolute;
@@ -254,7 +169,7 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
-  transition: 200ms ease-in-out;
+  transition: 300ms ease-in-out;
   border-radius: 20px;
   padding: 10px;
   z-index: 5;
@@ -309,7 +224,7 @@ header {
 
 .container-information-child {
   position: relative;
-  height: 95%;
+  min-height: 100%;
   display: flex;
   padding: 0px 15px;
 }
@@ -365,11 +280,12 @@ header {
   justify-content: space-around;
   border: 1px solid black;
   flex-direction: column;
+  margin-top: 10px;
 }
 
 .file-upload {
   display: flex;
-  margin-top: 20px;
+  margin-top: 10px;
   max-width: 100%;
 }
 
@@ -445,11 +361,11 @@ legend {
   right: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  transition: 200ms ease-in-out;
+  /* background-color: red; */
+  transition: 300ms ease-in-out;
   opacity: 0;
   pointer-events: none;
   z-index: 4;
-
   overflow: hidden;
 }
 
