@@ -51,7 +51,7 @@ Third party:
 bootstrap,
 jquery,
 ajax (for API request/response),
-minJS
+momentJS
 
 
   
