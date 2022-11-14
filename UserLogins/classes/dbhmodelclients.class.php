@@ -328,15 +328,15 @@ class DbhModelClients extends dbh
 
 
     // updated client's information
-    protected function update_single_user($status, $verifier, $dateForwarded, $applicationNo)
+    protected function update_single_user($status, $verifier,$remarks, $dateForwarded, $applicationNo)
     {
         $sql = "UPDATE clients_personal_information SET status = :status WHERE application_no = :applicationNo";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute(['status' => $status, 'applicationNo' => $applicationNo]);
 
-        $sql = "UPDATE clients_application_history SET verifier = :verifier WHERE application_no = :applicationNo";
+        $sql = "UPDATE clients_application_history SET verifier = :verifier,remarks = :remarks WHERE application_no = :applicationNo";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute(['verifier' => $verifier, 'applicationNo' => $applicationNo]);
+        $stmt->execute(['verifier' => $verifier, 'remarks' => $remarks, 'applicationNo' => $applicationNo]);
 
         $sql = "UPDATE clients_loan_and_bank_details SET date_forwarded = :dateForwarded WHERE application_no = :applicationNo";
         $stmt = $this->connect()->prepare($sql);

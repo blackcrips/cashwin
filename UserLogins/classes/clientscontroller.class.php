@@ -25,9 +25,8 @@ class ClientsController extends DbhModelClients
             $applicationNo = $_POST['save-id'];
             $verifier = $_SESSION['userData']['name'];
             $dateForwarded = '';
-            $this->update_single_user($status, $verifier, $dateForwarded, $applicationNo);
+            $this->update_single_user($status, $verifier,$remarks, $dateForwarded, $applicationNo);
             $this->addClientsHistory($applicationNo, $action);
-            header("location: ./verifierDashboard.php");
         }
     }
 
@@ -40,16 +39,30 @@ class ClientsController extends DbhModelClients
         }
     }
 
-    public function saveRemarksandAttachment($applicationNo, $filesUploaded, $remarks)
+    public function saveRemarksandAttachment($applicationNo, $remarks)
     {
         if ($remarks == "") {
 
-            $this->upLoadAttachments($filesUploaded, $applicationNo);
+            $this->transfer_fresh();
 
-            echo "<script>alert('Save Success!')</script>";
+            echo "<script>alert('Check inprocess tab')</script>";
             echo "<script>window.location.href = '../login.php'</script>";
             return;
         } else {
+            $fileGovtId = $_FILES['file-govtid'];
+            $fileCoid = $_FILES['file-coid'];
+            $filePoi = $_FILES['file-poi'];
+            $filePob = $_FILES['file-pob'];
+            $fileAtm = $_FILES['file-atm'];
+            $fileOthers = $_FILES['file-others'];
+            $filesUploaded = [
+                $fileGovtId,
+                $fileCoid,
+                $filePoi,
+                $filePob,
+                $fileAtm,
+                $fileOthers
+            ];
             $this->upLoadAttachments($filesUploaded, $applicationNo);
             $action = "Added remarks // " . $remarks;
             $oldRemark = $this->get_specific_client_details($applicationNo);
@@ -411,8 +424,10 @@ class ClientsController extends DbhModelClients
             $action = "Forwarded application to SVO dashboard";
             $this->addClientsHistory($applicationNo, $action);
 
-            $this->update_single_user($status, $verifier, $dateForwarded, $applicationNo);
+            $this->update_single_user($status, $verifier,$remarks, $dateForwarded, $applicationNo);
             header("Refresh: 0");
+        } else {
+            return;
         }
     }
 
@@ -436,7 +451,7 @@ class ClientsController extends DbhModelClients
 
             $dateForwarded = date("Y/m/d");
 
-            $this->update_single_user($status, $verifier, $dateForwarded, $id);
+            $this->update_single_user($status, $verifier,$remarks, $dateForwarded, $id);
             header("Refresh: 0");
         }
     }
@@ -598,7 +613,7 @@ class ClientsController extends DbhModelClients
 
             $dateForwarded = $clientsDetails[0]['date_forwarded'];
 
-            $this->update_single_user($status, $verifier, $dateForwarded, $applicationNo);
+            $this->update_single_user($status, $verifier,$remarks, $dateForwarded, $applicationNo);
 
             $action = "Forwarded application to Accounts dashboard";
             $this->addClientsHistory($applicationNo, $action);
@@ -643,7 +658,7 @@ class ClientsController extends DbhModelClients
 
             $dateForwarded = $clientsDetails[0]['date_forwarded'];
 
-            $this->update_single_user($status, $verifier, $dateForwarded, $id);
+            $this->update_single_user($status, $verifier,$remarks, $dateForwarded, $id);
             header("Refresh: 0");
         }
     }

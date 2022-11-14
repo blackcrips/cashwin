@@ -242,6 +242,7 @@ require_once('./headerSeniorVerificationDashboard.php');
 
 
 <script src="../../Js/verifierDashboard.js"></script>
+<script src="../../Js/header.js"></script>
 </body>
 
 </html>

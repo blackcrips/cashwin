@@ -136,7 +136,6 @@ if (isset($_POST['view-details'])) {
                             <fieldset class="fieldAttachment" id="fieldAttachment">
                                 <legend>Attachment</legend>
                                 <div class="view-uploaded-file">
-                                    <!-- <button name="view-govtId" type="submit">ID</button> -->
                                     <a class="btn btn-primary" id="attachment1" href="../../image.php?application_no=&filename=Attachment0" target="_blank" rel="noopener noreferrer">ID</a>
 
                                     <a class="btn btn-primary" href="../../image.php?application_no=&filename=Attachment1" target="_blank" rel="noopener noreferrer">COID</a>
@@ -185,6 +184,7 @@ if (isset($_POST['view-details'])) {
 </div>
 <div class="overlay" id="overlay" data-cancel-inside></div>
 <script src="../../Js/verifierDashboard.js"></script>
+<script src="../../Js/header.js"></script>
 </body>
 
 </html>

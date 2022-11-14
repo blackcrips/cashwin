@@ -6,7 +6,7 @@ $userDetails = new AgentsController;
 $deleteUser = new ClientsController;
 
 $viewDetails->showForwardedApplications();
-$deleteUser->saveRemarksandAttachment();
+// $deleteUser->saveRemarksandAttachment();
 $deleteUser->delete_user();
 $deleteUser->direct_dashboard();
 
